@@ -1,7 +1,7 @@
 .header {
   padding-top: 30px;
-  padding-bottom: 60px;
-  background-color: #b8c9f1;
+  padding-bottom: 30px;
+  background-color: #ddf5ff;
 }
 
 .header__title {
@@ -45,9 +45,20 @@
   margin-top: 20px;
 }
 
-.socials {
-  text-align: right;
+.col-md-6, .col-md-4 {
+  -ms-flex: 0 0 50%;
+  flex: 0 0 100%;
+  max-width: 100%;
 }
+
+.socials {
+  text-align: center;
+}
+
+.social:hover { 
+  opacity:0.8; 
+}
+/*/.social:active { opacity:1; }*/
 
 .social img {
   max-width: 45px;
@@ -66,6 +77,7 @@ footer {
 .legal {
   font-size: 12px;
 }
+
 
 @media (max-width: 992px) {
   .header__title {
