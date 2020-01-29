@@ -4766,14 +4766,18 @@ a.link:hover::before {
 .right-panel .skills-item progress::-ms-progress-bar {
   background-color: rgba(57, 113, 255, .8)
 }
-.right-panel .education {
+.right-panel .skillz {
   padding-bottom: 15px
 }
-.right-panel .experience {
+.right-panel .summary {
   background-color: #fff;
   padding-bottom: 15px
 }
-.right-panel .project {
+.right-panel .works {
+	background-color: #fff;
+	padding-bottom: 15px
+}
+.right-panel .education {
   padding-bottom: 20px
 }
 .right-panel .project .wrap-img {
@@ -5044,7 +5048,7 @@ a.link:hover::before {
   background-position: center top;
   text-align: center
 }
-.right-panel .clients h2 {
+.right-panel .courses h2 {
   text-align: left;
   display: inline-block;
   float: left
@@ -5063,8 +5067,8 @@ a.link:hover::before {
   margin-top: 30px;
   display: inline-block;
   width: 82px;
-  padding: 10px;
-  background-color: #ccc;
+  padding: 4px;
+  background-color: rgb(255, 255, 255);
   position: relative;
   -webkit-box-shadow: 0 0 5px 3px rgba(204, 204, 204, .3);
   box-shadow: 0 0 5px 3px rgba(204, 204, 204, .3);
@@ -5129,13 +5133,13 @@ a.link:hover::before {
 }
 .right-panel .say .soc li>a {
   font-size: 30px;
-  color: #4c4c4c;
+  color: #3971ff;
   display: inline-block;
   -webkit-transition: color ease-in-out .2s;
   transition: color ease-in-out .2s
 }
 .right-panel .say .soc li>a:hover {
-  color: #3971ff
+  color: #3995ff
 }
 .right-panel .say .soc li:last-child {
   margin-right: 0
