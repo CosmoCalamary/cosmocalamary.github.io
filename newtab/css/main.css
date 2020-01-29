@@ -50,7 +50,7 @@
 }
 
 .social img {
-  max-width: 25px;
+  max-width: 45px;
   margin-right: 10px;
 }
 
@@ -72,7 +72,7 @@ footer {
     font-size: 26px;
   }
   .socials {
-    text-align: left;
+    text-align: match-parent;
   }
   .section-title {
     font-size: 22px;
