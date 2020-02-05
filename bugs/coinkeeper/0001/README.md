@@ -18,4 +18,4 @@
 ***Severity:*** Minor
 
 ***Скриншот:***
-![ButtonNextDontWork.png](/img/ButtonNextDontWork.png "Внизу нажать на [Далее]")
+![ButtonNextDontWork.png](../img/ButtonNextDontWork.png "Внизу нажать на [Далее]")
