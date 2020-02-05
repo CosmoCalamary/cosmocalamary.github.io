@@ -19,6 +19,4 @@
 
 ***Скриншот:***
 
-[spoiler]
-![ButtonNextDontWork.png](https://cosmocalamary.github.io/bugs/coinkeeper/0001/img/ButtonNextDontWork.png "Внизу нажать на [Далее]")
-[/spoiler]
+[spoiler]![ButtonNextDontWork.png](https://cosmocalamary.github.io/bugs/coinkeeper/0001/img/ButtonNextDontWork.png "Внизу нажать на [Далее]")[/spoiler]
