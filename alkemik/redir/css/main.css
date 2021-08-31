@@ -588,12 +588,12 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ footer ]*/
 
-.footer_alkemik {
-  max-width: 100%;
+.alkemik-footer {
+  display: block;
   font-family: Poppins-Bold;
-  color: #00ccff;
-  font-size: 13px;
-  line-height: 1.4;
+  font-size: 14px;
+  color: #00b8e6;
+  line-height: 1.2;
   text-align: center;
 }
 
