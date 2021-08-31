@@ -44,15 +44,16 @@ body, html {
 
 /*---------------------------------------------*/
 a {
-	font-family: Poppins-Regular;
-	font-size: 14px;
+	font-family: Poppins-Bold;
+	font-size: 18px;
 	line-height: 1.7;
-	color: #666666;
+	color: #ebebeb;
 	margin: 0px;
 	transition: all 0.4s;
 	-webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+  text-transform: none;
 }
 
 a:focus {
@@ -61,7 +62,7 @@ a:focus {
 
 a:hover {
 	text-decoration: none;
-  color: #a64bf4;
+  color: #464646;
 }
 
 /*---------------------------------------------*/
@@ -412,6 +413,75 @@ iframe {
   left: 0;
 }
 
+/*------------------------------------------------------------------
+[ Button alkemik ]*/
+.container-alkemik-form-btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.wrap-alkemik-form-btn {
+  width: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+  border-radius: 25px;
+  overflow: hidden;
+  margin: 0 auto;
+
+  box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -moz-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -webkit-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -o-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -ms-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+}
+
+.alkemik-form-bgbtn {
+  position: absolute;
+  z-index: -1;
+  width: 300%;
+  height: 100%;
+  background: #a64bf4;
+  background: -webkit-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
+  background: -o-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
+  background: -moz-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
+  background: linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
+  top: 0;
+  left: -100%;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.alkemik-form-btn {
+  font-family: Poppins-Medium;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  height: 50px;
+}
+
+.wrap-alkemik-form-btn:hover .alkemik-form-bgbtn {
+  left: 0;
+}
 
 /*------------------------------------------------------------------
 [ Alert validate ]*/
@@ -520,8 +590,6 @@ iframe {
 
 .footer_alkemik {
   max-width: 100%;
-  align-items: center;
-  justify-content: center;
   font-family: Poppins-Bold;
   color: #00ccff;
   font-size: 13px;
@@ -529,3 +597,11 @@ iframe {
   text-align: center;
 }
 
+stores_alkemik {
+  max-width: 100%;
+  font-family: Poppins-Bold;
+  color: #ffffff;
+  font-size: 17px;
+  line-height: 1.4;
+  
+}
