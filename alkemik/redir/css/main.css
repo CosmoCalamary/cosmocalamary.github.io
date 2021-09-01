@@ -587,7 +587,7 @@ iframe {
 
 /*//////////////////////////////////////////////////////////////////
 [ buttons ]*/
-.button_beatstars1 {
+.button_soundclick {
   width: 100%
   display: inline-block !important;
   text-decoration: none !important;
@@ -599,7 +599,26 @@ iframe {
   padding: 15px 50px !important; 
   transition: all 0.8s ease !important;
 }
-.button_beatstars1:hover{
+.button_soundclick:hover{
+  text-decoration: none !important; 
+  background-color: #54ffc5 !important;
+  color: #424242 !important;
+  border-color: #006089 !important;
+}
+
+.button_beatstars {
+  width: 100%
+  display: inline-block !important;
+  text-decoration: none !important;
+  background-color: #131aff !important;
+  color: #f4f4f4 !important;
+  border: 0px solid #ffffff !important;
+  border-radius: 100px !important;
+  font-size: 16px !important;
+  padding: 15px 50px !important; 
+  transition: all 0.8s ease !important;
+}
+.button_beatstars:hover{
   text-decoration: none !important; 
   background-color: #54ffc5 !important;
   color: #424242 !important;
