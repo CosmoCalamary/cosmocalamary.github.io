@@ -587,49 +587,32 @@ iframe {
 
 /*//////////////////////////////////////////////////////////////////
 [ buttons ]*/
-.button_soundclick {
-  width: 100%
+.button_stores {
+  width: 100%;
+  height: 60px;
   display: inline-block !important;
   text-decoration: none !important;
   background-color: #131aff !important;
   color: #f4f4f4 !important;
-  border: 0px solid #ffffff !important;
+  border: 5px solid #ffffff !important;
   border-radius: 100px !important;
   font-size: 16px !important;
-  padding: 15px 50px !important; 
+  /*padding: 15px 50px !important;*/ 
+  text-align: center;
+  vertical-align: middle;
+
   transition: all 0.8s ease !important;
 }
-.button_soundclick:hover{
+.button_stores:hover{
   text-decoration: none !important; 
   background-color: #54ffc5 !important;
   color: #424242 !important;
-  border-color: #006089 !important;
+  border-color: #ffffff !important;
 }
 
-.button_beatstars {
-  width: 100%
-  display: inline-block !important;
-  text-decoration: none !important;
-  background-color: #131aff !important;
-  color: #f4f4f4 !important;
-  border: 0px solid #ffffff !important;
-  border-radius: 100px !important;
-  font-size: 16px !important;
-  padding: 15px 50px !important; 
-  transition: all 0.8s ease !important;
+.btn_txt {
+  line-height: 50px;
 }
-.button_beatstars:hover{
-  text-decoration: none !important; 
-  background-color: #54ffc5 !important;
-  color: #424242 !important;
-  border-color: #006089 !important;
-}
-
-
-
-
-
-
 
 /*//////////////////////////////////////////////////////////////////
 [ footer ]*/
@@ -641,13 +624,4 @@ iframe {
   color: #00b8e6;
   line-height: 1.2;
   text-align: center;
-}
-
-stores_alkemik {
-  max-width: 100%;
-  font-family: Poppins-Bold;
-  color: #ffffff;
-  font-size: 17px;
-  line-height: 1.4;
-  
 }
