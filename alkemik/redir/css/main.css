@@ -632,11 +632,11 @@ iframe {
   text-decoration: none !important;
   background-color: #ddd1da !important;
   color: #272727 !important;
-  border: 0px solid #ffffff !important;
+  border: 3px solid #ffffff !important;
   border-radius: 100px !important;
   font-family: Poppins-Medium;
   font-size: 14px !important;
-  padding: 7px 20px !important;
+  padding: 0px 20px !important;
   text-align: center;
   vertical-align: middle;
   transition: all 0.8s ease !important;
