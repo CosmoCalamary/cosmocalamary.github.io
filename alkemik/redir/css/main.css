@@ -47,7 +47,7 @@ a {
 	font-family: Poppins-Bold;
 	font-size: 18px;
 	line-height: 1.7;
-	color: #ebebeb;
+	/*color: #ebebeb;*/
 	margin: 0px;
 	transition: all 0.4s;
 	-webkit-transition: all 0.4s;
@@ -643,6 +643,16 @@ iframe {
 }
 .credits2_txt {
   line-height: 10px;
+}
+.credits-others {
+  margin: 15px;
+  display: block;
+  font-family: Poppins-Bold;
+  font-size: 14px;
+  color: #00b8e6;
+  line-height: 1.2;
+  text-align: center;
+  padding: 0px 20px !important;
 }
 
 /*//////////////////////////////////////////////////////////////////
