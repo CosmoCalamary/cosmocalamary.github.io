@@ -592,10 +592,10 @@ iframe {
   height: 60px;
   display: inline-block !important;
   text-decoration: none !important;
-  background-color: #f3e7f0 !important;
+  background-color: #f7f1f5 !important;
   color: #272727 !important;
   border: 0px solid #ffffff !important;
-  border-radius: 5px 5px 0 0 !important;
+  border-radius: 20px 20px 0 0 !important;
   font-family: Poppins-Medium;
   font-size: 22px !important;
   /*padding: 15px 50px !important;*/ 
@@ -605,13 +605,13 @@ iframe {
 }
 .credits2 {
   width: 100%;
-  height: 100px;
+  height: 170px;
   display: inline-block !important;
   text-decoration: none !important;
-  background-color: #f3e7f0 !important;
+  background-color: #f7f1f5 !important;
   color: #272727 !important;
   border: 0px solid #ffffff !important;
-  border-radius: 0 0 5px 5px !important;
+  border-radius: 0 0 20px 20px !important;
   font-size: 16px !important;
   /*padding: 15px 50px !important;*/ 
   text-align: center;
@@ -632,7 +632,7 @@ iframe {
   text-decoration: none !important;
   background-color: #ddd1da !important;
   color: #272727 !important;
-  border: 3px solid #ffffff !important;
+  border: 3px solid #f7f1f5 !important;
   border-radius: 100px !important;
   font-family: Poppins-Medium;
   font-size: 14px !important;
