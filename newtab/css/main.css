@@ -70,12 +70,12 @@ body {
   background-color: #c6ffec;
   text-align: center;
   border-radius: 100px !important;
-  padding: 5px 0 10px 0 !important;
+  padding: 10px 0 10px 0 !important;
   line-height: 20px;
 }
 .section-subsubtitle2 {
   width: 100%;
-  font-family: "Segoe UI";0
+  font-family: "Segoe UI";
   font-weight: 700;
   margin-bottom: 5px;
   margin-top: 0px;
