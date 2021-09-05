@@ -63,7 +63,7 @@ body {
 }
 
 .section-subsubtitle1 {
-  font-family: "Segoe UI", -apple-system;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue";
   font-weight: 900;
   margin-bottom: 15px;
   margin-top: 30px;
