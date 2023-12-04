@@ -1,12 +1,12 @@
 html {
   font-family: SF Pro Display;
-  -webkit-text-size-adjust: 60%;
-  -ms-text-size-adjust: 60%
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%
 }
 
 body {
   font-family: 'SF Pro Display', Arial, Tahoma;
-  font-weight: 400;
+  font-weight: 400; /* меняет толщину букв на странице */
 }
 
 
@@ -62,7 +62,7 @@ body {
   margin-top: 20px;
 }
 
-.section-subsubtitle1 {
+.section-subsubtitle1 { /* меняет наименования столбцов */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-weight: 900;
   margin-bottom: 15px;
@@ -131,7 +131,7 @@ footer {
   .socials {
     text-align: left;
   }
-  .section-title {
+  .section-title { 
     font-size: 22px;
   }
   .section-subtitle {
