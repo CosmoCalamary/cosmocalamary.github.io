@@ -393,7 +393,7 @@ body {
 	font-size: 12px;
 	line-height: 1.75;
 	color: #999;
-	background-color: #fff;
+	background-color: #000;
 }
 
 input,
@@ -10305,8 +10305,8 @@ address {
 
 .page .bg-gray-dark .btn-primary:hover {
 	color: #000;
-	background: #000;
-	border-color: #000;
+	background: #fff;
+	border-color: #fff;
 }
 
 @media (max-width: 767px) {
