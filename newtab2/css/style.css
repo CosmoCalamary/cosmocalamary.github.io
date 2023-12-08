@@ -10305,8 +10305,8 @@ address {
 
 .page .bg-gray-dark .btn-primary:hover {
 	color: #000;
-	background: #fff;
-	border-color: #fff;
+	background: #000;
+	border-color: #000;
 }
 
 @media (max-width: 767px) {
