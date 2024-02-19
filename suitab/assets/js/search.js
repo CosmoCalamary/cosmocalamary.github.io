@@ -63,11 +63,17 @@ function search(text) {
                 case "d":
                     window.location = "https://duckduckgo.com/?q=" + subtext;
                     break;
+                case "ya":
+                    window.location = "https://ya.ru/?q=" + subtext;
+                    break;
                 case "di":
                     window.location = "https://www.discogs.com/search/?q=" + subtext;
                     break;
                 case "i":
                     window.location = "https://www.imdb.com/find?q=" + subtext;
+                    break;
+                case "ki":
+                    window.location = "https://kinopoisk.ru/index.php?kp_query=" + subtext;
                     break;
                 case "m":
                     window.location = "https://www.themoviedb.org/search?query=" + subtext;

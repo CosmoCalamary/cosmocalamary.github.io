@@ -3,7 +3,7 @@
 <head>
     <title>SUI</title>
     <meta charset="utf-8">
-    <meta name="description" content="a startpage for your server and / or new tab page">
+    <meta name="description" content="startpage for CC">
     <meta http-equiv="Default-Style" content="">
     <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
     <link type="text/css" rel="stylesheet" href="./assets/css/styles.css"  media="screen,projection"/>
@@ -101,6 +101,22 @@
             <div id="links_loop">
                 {{#bookmarks}}
                     <div id="links_item">
+                        <h4>{{category}}</h4>
+                        {{#links}}
+                            <a href="{{url}}" target="{{target}}" class="theme_color-border theme_text-select">{{name}}</a>
+                        {{/links}}
+                    </div>
+                {{/bookmarks}}
+            </div>
+            </script>
+        </section>
+
+        <section id="pirate">
+            <script type="text/handlebars-template" id="pirate-template">
+            <h3>Pirate</h3>
+            <div id="pirate_loop">
+                {{#bookmarks}}
+                    <div id="pirate_item">
                         <h4>{{category}}</h4>
                         {{#links}}
                             <a href="{{url}}" target="{{target}}" class="theme_color-border theme_text-select">{{name}}</a>
