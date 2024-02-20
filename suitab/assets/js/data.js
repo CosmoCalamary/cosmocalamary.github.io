@@ -10,8 +10,8 @@ function fetchAndRender (name) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    fetchAndRender('pages');
     fetchAndRender('apps');
     fetchAndRender('links');
-    fetchAndRender('pirate');
     fetchAndRender('providers');
 });

@@ -76,6 +76,25 @@
             <h1 id="header_greet"></h1>
         </section>
 
+        <section id="pages">
+            <script type="text/handlebars-template" id="pages-template">
+            <h3>Навигация</h3>
+            <div id="pages_loop">
+                {{#pages}}
+                    <div class="pages_item">
+                        <div class="pages_icon">
+                            <span class="iconify icon" data-icon="mdi-{{icon}}"></span>
+                        </div>
+                        <div class="pages_text">
+                            <a href="{{urlpages}}" {{#if target}}target="{{target}}"{{/if}} >{{name}}</a>
+                            <span id="page-address">{{descr}}</span>
+                        </div>
+                    </div>
+                {{/pages}}
+            </div>
+            </script>
+        </section>
+    
         <section id="apps">
             <script type="text/handlebars-template" id="apps-template">
             <h3>Часто используемое</h3>
@@ -111,21 +130,6 @@
             </script>
         </section>
 
-        <section id="pirate">
-            <script type="text/handlebars-template" id="pirate-template">
-            <h3>Pirate</h3>
-            <div id="pirate_loop">
-                {{#bookmarks}}
-                    <div id="pirate_item">
-                        <h4>{{category}}</h4>
-                        {{#links}}
-                            <a href="{{url}}" target="{{target}}" class="theme_color-border theme_text-select">{{name}}</a>
-                        {{/links}}
-                    </div>
-                {{/bookmarks}}
-            </div>
-            </script>
-        </section>
     </main>
 
     <div id="modal_init">

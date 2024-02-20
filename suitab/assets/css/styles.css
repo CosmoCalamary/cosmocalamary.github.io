@@ -244,6 +244,57 @@ table a{
 	text-transform: uppercase;
 }
 
+#pages_loop{
+	border-bottom: 0px solid var(--color-text-acc);
+	display: grid;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: 64px;
+	padding-bottom: var(--module-spacing);
+}
+
+.pages_icon{
+	height: 64px;
+	margin-right: 1em;
+	padding-top: 15px;
+}
+
+.pages_icon span{
+	font-size: 2.5em;
+	line-height: 3rem;
+}
+
+.pages_item{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	height: 64px;
+	margin: 0;
+}
+
+.pages_text{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex: 1;
+	overflow: hidden;
+}
+
+.pages_text a{
+	font-size: 1em;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.pages_text span{
+	color: var(--color-text-acc);
+	font-size: 0.8em;
+	text-transform: uppercase;
+}
+
+
+
 
 #links_loop{
 	display: grid;
@@ -268,33 +319,6 @@ table a{
 	display: block;
 	line-height: 2;
 }
-
-
-#pirate_loop{
-	display: grid;
-	flex-wrap: nowrap;
-	grid-column-gap: 20px;
-	grid-row-gap: 0px;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	grid-template-rows: auto;
-}
-
-#pirate_item{
-	line-height: 1.5rem;
-	margin-bottom: 2em;
-	webkit-font-smoothing: antialiased;
-}
-
-#pirate_item h4{
-	color: var(--color-text-acc);
-}
-
-#pirate_item a{
-	display: block;
-	line-height: 2;
-}
-
-
 
 
 
@@ -498,13 +522,15 @@ table a{
 		width: 100vw;
 	}
 
+	#pages_loop{
+		grid-template-columns: 1fr 1fr 1fr;
+		width: 100vw;
+	}
+
 	#links_loop	{
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 
-	#pirate_loop	{
-		grid-template-columns: 1fr 1fr 1fr;
-	}
 
     #modal>div{
         margin-left: auto;
@@ -565,6 +591,24 @@ table a{
 		font-size: 2em;
 		line-height: 2.5rem;
 	}
+
+	#pages_loop{
+		grid-column-gap: 0px;
+		grid-row-gap: 0px;
+		grid-template-columns: 1fr 1fr;
+		width: 100vw;
+	}
+
+	.pages_icon{
+		height: 64px;
+		margin-right: 0.8em;
+		padding-top: 14px;
+	}
+
+	.pages_icon span{
+		font-size: 2em;
+		line-height: 2.5rem;
+	}
     
 	#links_loop{
 		display: grid;
@@ -575,19 +619,18 @@ table a{
 		grid-template-rows: auto;
 	}
 
-	#pirate_loop{
-		display: grid;
-		flex-wrap: nowrap;
-		grid-column-gap: 20px;
-		grid-row-gap: 0px;
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: auto;
-	}
+
 }
 
 /* Small Screens */
 @media only screen and (max-width: 400px) {
 	#app-address {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	#page-address {
 		display: none;
 	}
 }
