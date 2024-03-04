@@ -116,13 +116,13 @@
 
          <section id="links">
             <script type="text/handlebars-template" id="links-template">
-            <h3>Bookmarks</h3>
+            <h3>Закладки</h3>
             <div id="links_loop">
                 {{#bookmarks}}
                     <div id="links_item">
                         <h4>{{category}}</h4>
                         {{#links}}
-                            <a href="{{url}}" target="{{target}}" class="theme_color-border theme_text-select">{{name}}</a>
+                            <a href="{{url}}" target="{{target}}" class="theme_color-border theme_text-select">{{name}}<font color=gray>{{description}}</font></a>
                         {{/links}}
                     </div>
                 {{/bookmarks}}

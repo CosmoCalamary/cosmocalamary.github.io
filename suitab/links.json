@@ -1,15 +1,48 @@
 {
             "bookmarks" : [
               {
-                "category": "Communicate",
+                "category": "🔎 Поисковики",
                 "links": [
                   {
-                    "name": "Discord",
-                    "url": "https://discord.com"
+                    "name": "Яндекс",
+                    "url": "https://ya.ru"
+                  },
+                  {
+                    "name": "Google",
+                    "url": "https://google.com"
+                  },
+                  {
+                    "name": "Bing",
+                    "url": "https://bing.com"
+                  },
+                  {
+                    "name": "DuckDuckGo",
+                    "url": "https://duckduckgo.com/"
+                  }
+                ]
+              },
+              {
+                "category": "🧬 Социальное",
+                "links": [
+                  {
+                    "name": "VK",
+                    "url": "https://vk.com/"
+                  },
+                  {
+                    "name": "VK/coscala",
+                    "url": "https://vk.com/coscala"
                   },
                   {
                     "name": "Gmail",
                     "url": "http://gmail.com"
+                  },
+                  {
+                    "name": "Facebook",
+                    "url": "http://facebook.com"
+                  },
+                  {
+                    "name": "Instagram",
+                    "url": "http://instagram.com"
                   },
                   {
                     "name": "Slack",
@@ -19,26 +52,7 @@
                 ]
               },
               {
-                "category": "Cloud",
-                "links": [
-                  {
-                    "name": "Box",
-                    "url": "https://box.com",
-                    "target": "sui"
-                  },
-                  {
-                    "name": "Dropbox",
-                    "url": "https://dropbox.com",
-                    "target": "sui"
-                  },
-                  {
-                    "name": "Drive",
-                    "url": "https://drive.google.com"
-                  }
-                ]
-              },
-              {
-                "category": "Design",
+                "category": "🎛️ Musicmakes",
                 "links": [
                   {
                     "name": "Awwwards",
@@ -58,12 +72,13 @@
                 "category": "Dev",
                 "links": [
                   {
-                    "name": "Codepen",
-                    "url": "https://codepen.io/"
+                    "name": "Эмоджи для заголовков",
+                    "url": "https://ru.piliapp.com/emoji/list/"
                   },
                   {
-                    "name": "Devdocs",
-                    "url": "https://devdocs.io"
+                    "name": "Tiny png",
+                    "description": " [Сжимает изображения.Есть API.]",
+                    "url": "https://tinypng.com/"
                   },
                   {
                     "name": "Devhints",
@@ -72,7 +87,7 @@
                 ]
               },
               {
-                "category": "Lifestyle",
+                "category": "💀 Софт",
                 "links": [
                   {
                     "name": "Design Milk",

@@ -610,14 +610,14 @@ table a{
 		line-height: 2.5rem;
 	}
     
-	#links_loop{
+/* 	#links_loop{
 		display: grid;
 		flex-wrap: nowrap;
 		grid-column-gap: 20px;
 		grid-row-gap: 0px;
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: auto;
-	}
+	} */
 
 
 }
