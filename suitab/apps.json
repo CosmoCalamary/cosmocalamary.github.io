@@ -19,6 +19,8 @@
         {"name":"Stackedit","url":"md.example.com","icon":"markdown"},
         {"name":"Transmission","url":"dl.example.com","icon":"progress-download"},
         {"name":"Ubooquity","url":"opds.example.com","icon":"library-shelves"},
-        {"name":"T","url":"cosmocalamary.github.io/suitab/t.html","icon":"olympics"}
+        {"name":"T","url":"cosmocalamary.github.io/suitab/t.html","icon":"olympics","descr":"Скачивание торр"},
+        {"name":"Rutracker","url":"rutracker.org","icon":"message-video","descr":"Трекер"},
+        {"name":"Fontello","url":"fontello.com/","icon":"markdown","descr":"шрифтовые иконки. Шрифты генерируются на ходу из выбранных иконок, доступны иконки из 14 популярных шрифтов."}
     ]
 }
