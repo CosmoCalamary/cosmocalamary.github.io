@@ -3,48 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Виджет Калькулятора</title>
-    <!-- Подключение библиотеки виджета -->
-    <script src="https://calcus.ru/dist/widget.js"></script>
-    <!-- Стилизация виджета -->
+    <title>Калькулятор расчета возраста</title>
     <style>
-        /* Цвет фона калькулятора */
-        .calc-form {
-            background-color: #f7f7f7 !important;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-
-        /* Цвет футера (для того, чтобы цвет футера отличался от основного фона) */
-        .calc-footer {
-            background-color: #eeeeee !important;
+        .calculator-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
         }
-
-        /* Рамка */
-        .calc-form {
-            border: 1px solid #eee !important;
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
         }
-
-        /* Цвет ссылок */
-        .calc-form a {
-            color: #336600 !important;
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 16px;
         }
-
-        /* Цвет кнопки */
-        .calc-submit {
-            background-color: mediumseagreen !important;
+        input[type="date"], input[type="button"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
-
-        /* Цвет индикатора загрузки */
-        .loading-row .spinner-border {
-            color: mediumseagreen;
+        .result {
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .result span {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Калькулятор</h1>
-    <!-- Инициализация виджета -->
-    <div id="calcus-container"></div> 
+
+    <div class="calculator-container">
+        <h1>Калькулятор возраста</h1>
+        <label for="birthdate">Дата рождения:</label>
+        <input type="date" id="birthdate">
+        <input type="button" value="Рассчитать возраст" onclick="calculateAge()">
+        
+        <div class="result" id="result"></div>
+    </div>
+
     <script>
-        CalcusWidget.show('Age');
+        function calculateAge() {
+            const birthdateInput = document.getElementById("birthdate");
+            const resultDiv = document.getElementById("result");
+
+            if (birthdateInput.value === "") {
+                resultDiv.innerHTML = "Пожалуйста, выберите дату рождения.";
+                return;
+            }
+
+            const birthdate = new Date(birthdateInput.value);
+            const today = new Date();
+
+            let age = today.getFullYear() - birthdate.getFullYear();
+            const monthDiff = today.getMonth() - birthdate.getMonth();
+            const dayDiff = today.getDate() - birthdate.getDate();
+
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                age--;
+            }
+
+            resultDiv.innerHTML = `Ваш возраст: <span>${age}</span> лет.`;
+        }
     </script>
+
 </body>
 </html>
