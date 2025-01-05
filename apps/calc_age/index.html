@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Виджет Калькулятора</title>
+    <!-- Подключение библиотеки виджета -->
+    <script src="https://calcus.ru/dist/widget.js" defer></script>
+    <!-- Подключение шрифта Monserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Стилизация виджета -->
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #calcus-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .calc-form {
+            background-color: #f7f7f7 !important;
+            border-radius: 10px !important;
+            padding: 20px !important;
+        }
+
+        .calc-footer {
+            background-color: #eeeeee !important;
+        }
+
+        .calc-form a {
+            color: #336600 !important;
+            text-decoration: none;
+        }
+
+        .calc-form a:hover {
+            text-decoration: underline;
+        }
+
+        .calc-submit {
+            background-color: mediumseagreen !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 5px !important;
+            padding: 10px 20px !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            transition: background-color 0.3s ease !important;
+        }
+
+        .calc-submit:hover {
+            background-color: #2e8b57 !important;
+        }
+
+        .loading-row .spinner-border {
+            color: mediumseagreen;
+        }
+    </style>
+</head>
+<body>
+    <h1>Калькулятор</h1>
+    <!-- Инициализация виджета -->
+    <div id="calcus-container">Загрузка виджета...</div> 
+    <script>
+        window.onload = function() {
+            // Проверяем, загрузился ли скрипт библиотеки
+            console.log('Проверяем наличие библиотеки CalcusWidget...');
+            if (typeof CalcusWidget !== 'undefined' && typeof CalcusWidget.show === 'function') {
+                try {
+                    console.log('Библиотека найдена. Инициализируем виджет.');
+                    CalcusWidget.show('Age');
+                    console.log('Виджет успешно загружен.');
+                } catch (error) {
+                    console.error('Ошибка при инициализации виджета:', error);
+                    document.getElementById('calcus-container').innerText = 'Не удалось загрузить калькулятор. Попробуйте позже.';
+                }
+            } else {
+                console.error('Библиотека CalcusWidget не загружена или функция show недоступна.');
+                document.getElementById('calcus-container').innerText = 'Не удалось загрузить калькулятор. Проверьте подключение библиотеки.';
+            }
+        };
+    </script>
+</body>
+</html>
