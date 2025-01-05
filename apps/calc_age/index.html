@@ -94,6 +94,8 @@
     <script>
         function formatDate(input) {
             let value = input.value.replace(/\D/g, ''); // Убираем все нецифровые символы
+            
+            // Добавление точки в нужные места
             if (value.length >= 3 && value.length <= 4) {
                 value = value.slice(0, 2) + '.' + value.slice(2);
             } 
