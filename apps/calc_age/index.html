@@ -37,7 +37,7 @@
             margin: 10px 0 5px;
             color: #333;
         }
-        input[type="date"], input[type="button"] {
+        input[type="text"], input[type="button"] {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -80,11 +80,11 @@
     <div class="calculator-container">
         <h1>Калькулятор возраста</h1>
         
-        <label for="birthdate">Дата рождения:</label>
-        <input type="date" id="birthdate">
+        <label for="birthdate">Дата рождения (формат: DD-MM-YYYY):</label>
+        <input type="text" id="birthdate" placeholder="Введите дату (DD-MM-YYYY)">
         
-        <label for="currentdate">Текущая дата:</label>
-        <input type="date" id="currentdate" value="<?= date('Y-m-d') ?>">
+        <label for="currentdate">Текущая дата (формат: DD-MM-YYYY):</label>
+        <input type="text" id="currentdate" placeholder="Введите текущую дату" value="05-01-2025">
 
         <input type="button" value="Рассчитать возраст" onclick="calculateAge()">
         
@@ -97,13 +97,22 @@
             const currentdateInput = document.getElementById("currentdate");
             const resultDiv = document.getElementById("result");
 
-            if (birthdateInput.value === "" || currentdateInput.value === "") {
-                resultDiv.innerHTML = "Пожалуйста, выберите дату рождения и текущую дату.";
+            // Проверка на правильный формат даты (DD-MM-YYYY)
+            const birthdateValue = birthdateInput.value;
+            const currentdateValue = currentdateInput.value;
+
+            const dateRegex = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
+
+            if (!birthdateValue.match(dateRegex) || !currentdateValue.match(dateRegex)) {
+                resultDiv.innerHTML = "Пожалуйста, введите даты в формате DD-MM-YYYY.";
                 return;
             }
 
-            const birthdate = new Date(birthdateInput.value);
-            const currentdate = new Date(currentdateInput.value);
+            const [birthDay, birthMonth, birthYear] = birthdateValue.split('-');
+            const [currentDay, currentMonth, currentYear] = currentdateValue.split('-');
+
+            const birthdate = new Date(birthYear, birthMonth - 1, birthDay); // Месяцы начинаются с 0
+            const currentdate = new Date(currentYear, currentMonth - 1, currentDay);
 
             // Расчет возраста
             let ageYears = currentdate.getFullYear() - birthdate.getFullYear();
