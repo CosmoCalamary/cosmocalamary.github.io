@@ -20,7 +20,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 350px;
         }
         h1 {
             text-align: center;
@@ -43,7 +43,7 @@
         .result {
             font-size: 18px;
             color: #333;
-            text-align: center;
+            text-align: left;
             margin-top: 20px;
         }
         .result span {
@@ -55,8 +55,13 @@
 
     <div class="calculator-container">
         <h1>Калькулятор возраста</h1>
+        
         <label for="birthdate">Дата рождения:</label>
         <input type="date" id="birthdate">
+        
+        <label for="currentdate">Текущая дата:</label>
+        <input type="date" id="currentdate" value="<?= date('Y-m-d') ?>">
+
         <input type="button" value="Рассчитать возраст" onclick="calculateAge()">
         
         <div class="result" id="result"></div>
@@ -65,25 +70,58 @@
     <script>
         function calculateAge() {
             const birthdateInput = document.getElementById("birthdate");
+            const currentdateInput = document.getElementById("currentdate");
             const resultDiv = document.getElementById("result");
 
-            if (birthdateInput.value === "") {
-                resultDiv.innerHTML = "Пожалуйста, выберите дату рождения.";
+            if (birthdateInput.value === "" || currentdateInput.value === "") {
+                resultDiv.innerHTML = "Пожалуйста, выберите дату рождения и текущую дату.";
                 return;
             }
 
             const birthdate = new Date(birthdateInput.value);
-            const today = new Date();
+            const currentdate = new Date(currentdateInput.value);
 
-            let age = today.getFullYear() - birthdate.getFullYear();
-            const monthDiff = today.getMonth() - birthdate.getMonth();
-            const dayDiff = today.getDate() - birthdate.getDate();
+            // Расчет возраста
+            let ageYears = currentdate.getFullYear() - birthdate.getFullYear();
+            const ageMonths = currentdate.getMonth() - birthdate.getMonth();
+            const ageDays = currentdate.getDate() - birthdate.getDate();
 
-            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-                age--;
+            if (ageMonths < 0 || (ageMonths === 0 && ageDays < 0)) {
+                ageYears--;
             }
 
-            resultDiv.innerHTML = `Ваш возраст: <span>${age}</span> лет.`;
+            const nextBirthday = new Date(birthdate);
+            nextBirthday.setFullYear(currentdate.getFullYear());
+            if (nextBirthday < currentdate) {
+                nextBirthday.setFullYear(currentdate.getFullYear() + 1);
+            }
+
+            const daysUntilNextBirthday = Math.floor((nextBirthday - currentdate) / (1000 * 60 * 60 * 24));
+
+            // Количество времени с момента рождения
+            const totalSeconds = Math.floor((currentdate - birthdate) / 1000);
+            const totalMinutes = Math.floor(totalSeconds / 60);
+            const totalHours = Math.floor(totalMinutes / 60);
+            const totalDays = Math.floor(totalSeconds / (60 * 60 * 24));
+
+            const months = Math.floor(ageMonths);
+            const days = Math.floor(ageDays < 0 ? (new Date(currentdate.getFullYear(), currentdate.getMonth(), 0).getDate() + ageDays) : ageDays);
+
+            resultDiv.innerHTML = `
+                <p>Ваш возраст:</p>
+                <p><strong>${ageYears} лет</strong></p>
+                <p><strong>${months} месяцев</strong></p>
+                <p><strong>${days} дней</strong></p>
+
+                <p>С дня рождения прошло:</p>
+                <p><strong>${totalSeconds} секунд</strong></p>
+                <p><strong>${totalMinutes} минуты</strong></p>
+                <p><strong>${totalHours} часов</strong></p>
+                <p><strong>${totalDays} дней</strong></p>
+
+                <p>Осталось до Дня Рождения:</p>
+                <p><strong>${daysUntilNextBirthday} дней</strong></p>
+            `;
         }
     </script>
 
