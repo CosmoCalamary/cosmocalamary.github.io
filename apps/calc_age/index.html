@@ -10,7 +10,7 @@
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f8ff;
+            background-color: #eaf7ff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,11 +24,11 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 350px;
             text-align: center;
-            border: 1px solid #ccc;
+            border: 1px solid #a1c4f4;
         }
         h1 {
             font-size: 28px;
-            color: #4CAF50;
+            color: #007BFF;
             margin-bottom: 20px;
         }
         label {
@@ -37,23 +37,23 @@
             margin: 10px 0 5px;
             color: #333;
         }
-        input[type="text"], input[type="button"] {
+        input[type="text"], input[type="number"], input[type="button"] {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
             font-size: 16px;
             border-radius: 8px;
-            border: 1px solid #ccc;
+            border: 1px solid #a1c4f4;
             box-sizing: border-box;
         }
         input[type="button"] {
-            background-color: #4CAF50;
+            background-color: #007BFF;
             color: white;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         input[type="button"]:hover {
-            background-color: #45a049;
+            background-color: #0056b3;
         }
         .result {
             margin-top: 20px;
@@ -66,7 +66,7 @@
         }
         .result span {
             font-weight: bold;
-            color: #4CAF50;
+            color: #007BFF;
         }
         .result p:last-child {
             margin-top: 20px;
@@ -80,11 +80,11 @@
     <div class="calculator-container">
         <h1>Калькулятор возраста</h1>
         
-        <label for="birthdate">Дата рождения (формат: DD-MM-YYYY):</label>
-        <input type="text" id="birthdate" placeholder="Введите дату (DD-MM-YYYY)">
+        <label for="birthdate">Дата рождения:</label>
+        <input type="number" id="birthdate" placeholder="Введите дату в формате DDMMYYYY" maxlength="8" oninput="formatDate(this)">
         
-        <label for="currentdate">Текущая дата (формат: DD-MM-YYYY):</label>
-        <input type="text" id="currentdate" placeholder="Введите текущую дату" value="05-01-2025">
+        <label for="currentdate">Возраст на дату:</label>
+        <input type="number" id="currentdate" placeholder="Введите дату в формате DDMMYYYY" maxlength="8" oninput="formatDate(this)">
 
         <input type="button" value="Рассчитать возраст" onclick="calculateAge()">
         
@@ -92,29 +92,44 @@
     </div>
 
     <script>
+        function formatDate(input) {
+            let value = input.value.replace(/\D/g, ''); // Убираем все нецифровые символы
+            if (value.length >= 3 && value.length <= 4) {
+                value = value.slice(0, 2) + '.' + value.slice(2);
+            } 
+            if (value.length >= 5 && value.length <= 6) {
+                value = value.slice(0, 5) + '.' + value.slice(5);
+            }
+            if (value.length > 6) {
+                value = value.slice(0, 6) + '.' + value.slice(6);
+            }
+            input.value = value;
+        }
+
         function calculateAge() {
             const birthdateInput = document.getElementById("birthdate");
             const currentdateInput = document.getElementById("currentdate");
             const resultDiv = document.getElementById("result");
 
-            // Проверка на правильный формат даты (DD-MM-YYYY)
-            const birthdateValue = birthdateInput.value;
-            const currentdateValue = currentdateInput.value;
+            const birthdateValue = birthdateInput.value.replace(/\D/g, '');
+            const currentdateValue = currentdateInput.value.replace(/\D/g, '');
 
-            const dateRegex = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
-
-            if (!birthdateValue.match(dateRegex) || !currentdateValue.match(dateRegex)) {
-                resultDiv.innerHTML = "Пожалуйста, введите даты в формате DD-MM-YYYY.";
+            if (birthdateValue.length !== 8 || currentdateValue.length !== 8) {
+                resultDiv.innerHTML = "Пожалуйста, введите даты в правильном формате DDMMYYYY.";
                 return;
             }
 
-            const [birthDay, birthMonth, birthYear] = birthdateValue.split('-');
-            const [currentDay, currentMonth, currentYear] = currentdateValue.split('-');
+            const birthDay = birthdateValue.slice(0, 2);
+            const birthMonth = birthdateValue.slice(2, 4);
+            const birthYear = birthdateValue.slice(4, 8);
+
+            const currentDay = currentdateValue.slice(0, 2);
+            const currentMonth = currentdateValue.slice(2, 4);
+            const currentYear = currentdateValue.slice(4, 8);
 
             const birthdate = new Date(birthYear, birthMonth - 1, birthDay); // Месяцы начинаются с 0
             const currentdate = new Date(currentYear, currentMonth - 1, currentDay);
 
-            // Расчет возраста
             let ageYears = currentdate.getFullYear() - birthdate.getFullYear();
             const ageMonths = currentdate.getMonth() - birthdate.getMonth();
             const ageDays = currentdate.getDate() - birthdate.getDate();
@@ -131,7 +146,6 @@
 
             const daysUntilNextBirthday = Math.floor((nextBirthday - currentdate) / (1000 * 60 * 60 * 24));
 
-            // Количество времени с момента рождения
             const totalSeconds = Math.floor((currentdate - birthdate) / 1000);
             const totalMinutes = Math.floor(totalSeconds / 60);
             const totalHours = Math.floor(totalMinutes / 60);
