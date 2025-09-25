@@ -1,0 +1,88 @@
+(function () {
+  function slugify(s) {
+    return (s || '').toLowerCase().trim()
+      .replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-+/g, '-');
+  }
+
+  function collectFromDocument(doc) {
+    const categories = [];
+    let current = null;
+
+    const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_ELEMENT, null);
+    const headingRE = /H[1-4]/;
+
+    function ensureCategory(title) {
+      const t = (title || 'Без категории').trim();
+      const key = slugify(t);
+      let cat = categories.find(c => c.key === key);
+      if (!cat) {
+        cat = { key, title: t, links: [] };
+        categories.push(cat);
+      }
+      return cat;
+    }
+
+    while (walker.nextNode()) {
+      const el = walker.currentNode;
+
+      if (headingRE.test(el.tagName)) {
+        current = ensureCategory(el.textContent);
+        continue;
+      }
+
+      const anchors = el.querySelectorAll ? el.querySelectorAll('a[href]') : [];
+      if (!anchors.length) continue;
+
+      anchors.forEach(a => {
+        try {
+          const url = a.href;
+          if (!/^https?:/i.test(url)) return;
+          const title = (a.textContent || '').trim() || url;
+          const desc = (a.getAttribute('title') || '').trim();
+          if (!current) current = ensureCategory('Без категории');
+          const exists = current.links.some(l => l.url === url);
+          if (!exists) current.links.push({ title, url, desc });
+        } catch (_) {}
+      });
+    }
+
+    // Удалить пустые
+    return categories.filter(c => c.links.length);
+  }
+
+  function mergeCategories(a, b) {
+    const map = new Map();
+    function addAll(arr) {
+      arr.forEach(cat => {
+        const key = cat.key || slugify(cat.title);
+        if (!map.has(key)) map.set(key, { key, title: cat.title, links: [] });
+        const target = map.get(key);
+        const seen = new Set(target.links.map(l => l.url));
+        cat.links.forEach(l => { if (!seen.has(l.url)) { target.links.push(l); seen.add(l.url); } });
+      });
+    }
+    addAll(a); addAll(b);
+    return Array.from(map.values()).sort((x, y) => x.title.localeCompare(y.title));
+  }
+
+  const existing = (() => {
+    try {
+      return JSON.parse(localStorage.getItem('linksDraft') || '{"categories":[]}');
+    } catch (e) { return { categories: [] }; }
+  })();
+
+  const fresh = { categories: collectFromDocument(document) };
+  const merged = { categories: mergeCategories(existing.categories || [], fresh.categories || []) };
+
+  localStorage.setItem('linksDraft', JSON.stringify(merged));
+
+  const blob = new Blob([JSON.stringify(merged, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'links.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  alert('Готово: links.json скачан и сохранён в localStorage как linksDraft — повторите на второй странице, чтобы объединить списки.');
+})();
