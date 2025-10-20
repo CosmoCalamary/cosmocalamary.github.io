@@ -130,4 +130,209 @@ body {
     align-items: center;
     justify-content: center;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url('https://images.pexels.com/photos/16592498/pexels-photo-16592498.
+                url('https://images.pexels.com/photos/16592498/pexels-photo-16592498.jpeg') center/cover no-repeat fixed;
+    position: relative;
+}
+
+.hero-content {
+    text-align: center;
+    z-index: 1;
+}
+
+.hero-title {
+    font-family: 'Lora', serif;
+    font-size: 80px;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+    animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Основной контент */
+.main-content {
+    padding: 80px 0;
+    background-color: var(--bg-dark);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Секции */
+.section {
+    margin-bottom: 80px;
+}
+
+.section-title {
+    font-family: 'Lora', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+/* Аккордеон - ОПТИМИЗИРОВАНО */
+.accordion-item {
+    margin-bottom: 15px;
+    background-color: var(--bg-section);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.accordion-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(57, 181, 74, 0.2);
+}
+
+.accordion-header {
+    padding: 20px 25px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    user-select: none;
+}
+
+.accordion-header:hover {
+    background-color: rgba(57, 181, 74, 0.1);
+    color: var(--accent-color);
+}
+
+.accordion-header::after {
+    content: '+';
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    transition: transform 0.2s ease;
+}
+
+.accordion-item.active > .accordion-header::after {
+    content: '−';
+}
+
+/* ИСПРАВЛЕНО: Возвращена анимация max-height, но уменьшена задержка */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding: 0 25px;
+}
+
+.accordion-item.active > .accordion-content {
+    max-height: 5000px;
+    padding: 20px 25px;
+    transition: max-height 0.5s ease-in;
+}
+
+/* Вложенный аккордеон */
+.accordion-item.nested {
+    margin: 15px 0;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.accordion-item.nested .accordion-header {
+    font-size: 16px;
+    padding: 15px 20px;
+}
+
+/* Ссылки */
+.link-item {
+    display: block;
+    padding: 12px 15px;
+    margin: 8px 0;
+    color: var(--text-color);
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--accent-color);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 15px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.link-item:hover {
+    background-color: rgba(57, 181, 74, 0.15);
+    padding-left: 20px;
+    border-left-width: 5px;
+}
+
+.link-desc {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 50px;
+    }
+    
+    .section-title {
+        font-size: 32px;
+    }
+    
+    .container {
+        padding: 0 20px;
+    }
+    
+    .header {
+        padding: 15px 20px;
+    }
+    
+    .side-menu {
+        width: 280px;
+        right: -280px;
+        padding: 60px 30px 30px 30px;
+    }
+    
+    .accordion-header {
+        font-size: 16px;
+        padding: 15px 20px;
+    }
+    
+    .link-item {
+        font-size: 14px;
+        padding: 10px 12px;
+        word-break: break-word;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .section-title {
+        font-size: 26px;
+    }
+    
+    .side-menu {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .side-menu.active {
+        right: 0;
+    }
+}
