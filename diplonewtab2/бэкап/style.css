@@ -5,13 +5,11 @@
 }
 
 :root {
-    --primary-color: #9b59b6;
+    --primary-color: #39b54a;
     --text-color: #ffffff;
     --bg-dark: #0f0f0f;
     --bg-section: #151515;
-    --accent-color: #9b59b6;
-    --accent-light: #bb8fce;
-    --desc-color: #bb8fce;
+    --accent-color: #39b54a;
 }
 
 html {
@@ -125,23 +123,15 @@ body {
     padding-left: 10px;
 }
 
-/* Hero секция - ИСПРАВЛЕНО: локальный фон */
+/* Hero секция */
 .hero {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url('img/hero-bg.jpg') center/cover no-repeat;
-    background-attachment: fixed;
+                url('https://images.pexels.com/photos/16592498/pexels-photo-16592498.jpeg') center/cover no-repeat fixed;
     position: relative;
-}
-
-/* Для мобильных устройств убираем fixed */
-@media (max-width: 768px) {
-    .hero {
-        background-attachment: scroll;
-    }
 }
 
 .hero-content {
@@ -196,7 +186,7 @@ body {
     border-bottom: 2px solid var(--accent-color);
 }
 
-/* Аккордеон - ИСПРАВЛЕНО: плавная анимация без дёрганий */
+/* Аккордеон - ОПТИМИЗИРОВАНО */
 .accordion-item {
     margin-bottom: 15px;
     background-color: var(--bg-section);
@@ -207,7 +197,7 @@ body {
 
 .accordion-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(155, 89, 182, 0.3);
+    box-shadow: 0 5px 20px rgba(57, 181, 74, 0.2);
 }
 
 .accordion-header {
@@ -222,7 +212,7 @@ body {
 }
 
 .accordion-header:hover {
-    background-color: rgba(155, 89, 182, 0.1);
+    background-color: rgba(57, 181, 74, 0.1);
     color: var(--accent-color);
 }
 
@@ -240,19 +230,18 @@ body {
     content: '−';
 }
 
-/* ИСПРАВЛЕНО: убрана дёрганая анимация, используем плавное появление/скрытие */
+/* ИСПРАВЛЕНО: Возвращена анимация max-height, но уменьшена задержка */
 .accordion-content {
     max-height: 0;
     overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease;
+    transition: max-height 0.3s ease-out;
     padding: 0 25px;
 }
 
 .accordion-item.active > .accordion-content {
-    max-height: 10000px;
-    opacity: 1;
+    max-height: 5000px;
     padding: 20px 25px;
+    transition: max-height 0.5s ease-in;
 }
 
 /* Вложенный аккордеон */
@@ -266,12 +255,11 @@ body {
     padding: 15px 20px;
 }
 
-/* Ссылки - ДОБАВЛЕНО: название сервиса */
+/* Ссылки */
 .link-item {
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    margin: 10px 0;
+    display: block;
+    padding: 12px 15px;
+    margin: 8px 0;
     color: var(--text-color);
     text-decoration: none;
     background-color: rgba(255, 255, 255, 0.05);
@@ -279,38 +267,19 @@ body {
     border-radius: 4px;
     transition: all 0.2s ease;
     font-size: 15px;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .link-item:hover {
-    background-color: rgba(155, 89, 182, 0.15);
+    background-color: rgba(57, 181, 74, 0.15);
     padding-left: 20px;
     border-left-width: 5px;
 }
 
-/* НОВОЕ: Название сервиса */
-.link-name {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--accent-light);
-    margin-bottom: 5px;
-    display: block;
-}
-
-/* НОВОЕ: URL ссылки */
-.link-url {
-    color: var(--text-color);
-    font-size: 14px;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    margin-bottom: 5px;
-}
-
-/* ИСПРАВЛЕНО: фиолетовый цвет описания */
 .link-desc {
-    color: var(--desc-color);
-    font-size: 13px;
-    font-style: italic;
-    margin-top: 5px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
 }
 
 /* Адаптивность */
@@ -344,15 +313,8 @@ body {
     
     .link-item {
         font-size: 14px;
-        padding: 12px;
-    }
-    
-    .link-name {
-        font-size: 16px;
-    }
-    
-    .link-url {
-        font-size: 13px;
+        padding: 10px 12px;
+        word-break: break-word;
     }
 }
 
