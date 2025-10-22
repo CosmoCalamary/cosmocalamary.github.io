@@ -5,13 +5,16 @@
 }
 
 :root {
-    --primary-color: #9b59b6;
-    --text-color: #ffffff;
-    --bg-dark: #0f0f0f;
-    --bg-section: #151515;
-    --accent-color: #9b59b6;
-    --accent-light: #bb8fce;
-    --desc-color: #bb8fce;
+  /* Базовые */
+  --text-color: #ffffff;
+  --bg-dark: #0f0f0f;
+  --bg-section: #151515;
+
+  /* Голубая палитра */
+  --primary-color: #1976d2;   /* тёмно-голубой */
+  --accent-color:  #1e90ff;   /* насыщенный голубой */
+  --accent-light:  #64b5f6;   /* светлый для hover/подсветок */
+  --desc-color:    #81d4fa;   /* мягкий голубой для описаний */
 }
 
 html {
@@ -19,10 +22,10 @@ html {
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-color);
-    line-height: 1.6;
+  font-family: "Geologica", sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
 /* Шапка - прозрачная */
@@ -47,13 +50,14 @@ body {
 
 /* Гамбургер меню */
 .menu-toggle {
-    width: 30px;
-    height: 25px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-    z-index: 1001;
+  width: 30px;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 1050; /* ниже .side-menu (1100), но выше хедера */
+  position: relative;
 }
 
 .menu-toggle span {
@@ -70,35 +74,43 @@ body {
 
 /* Боковое меню */
 .side-menu {
-    position: fixed;
-    top: 0;
-    right: -350px;
-    width: 350px;
-    height: 100%;
-    background: rgba(21, 21, 21, 0.98);
-    backdrop-filter: blur(20px);
-    padding: 80px 40px 40px 40px;
-    z-index: 999;
-    transition: right 0.4s ease;
-    overflow-y: auto;
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 350px;
+  height: 100%;
+  background: rgba(21, 21, 21, 0.98);
+  backdrop-filter: blur(20px);
+  padding: 80px 40px 80px 40px; /* снизу больше под кнопку */
+  z-index: 1100;                /* выше бургер-иконки */
+  transition: right 0.4s ease;
+  overflow-y: auto;
 }
+.side-menu.active { right: 0; }
 
-.side-menu.active {
-    right: 0;
-}
-
+/* Крестик переносим вниз справа */
 .side-menu-close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 40px;
-    cursor: pointer;
-    color: var(--text-color);
-    transition: color 0.3s ease;
+  position: sticky;             /* «прилипает» у низа контейнера при прокрутке */
+  bottom: 0;
+  margin-top: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  font-size: 32px;
+  line-height: 1;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  z-index: 1; /* внутри панели, но поверх её контента */
 }
-
 .side-menu-close:hover {
-    color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--accent-color);
+  transform: translateY(-1px);
 }
 
 .side-menu-list {
@@ -110,13 +122,14 @@ body {
 }
 
 .side-menu-list a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 400;
-    transition: all 0.3s ease;
-    display: block;
-    padding: 10px 0;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  display: block;
+  padding: 10px 0;
+  font-family: "Geologica", sans-serif;
 }
 
 .side-menu-list a:hover {
@@ -142,12 +155,12 @@ body {
 }
 
 .hero-title {
-    font-family: 'Lora', serif;
-    font-size: 80px;
-    font-weight: 700;
-    color: var(--text-color);
-    margin: 0;
-    animation: fadeInUp 1s ease;
+  font-family: "Geologica", sans-serif;
+  font-size: 80px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0;
+  animation: fadeInUp 1s ease;
 }
 
 /* Логотип на главном экране */
@@ -189,7 +202,7 @@ body {
 }
 
 .container {
-    max-width: 850px;
+    max-width: 950px;
     margin: 0 auto;
     padding: 0 40px;
 }
@@ -200,13 +213,13 @@ body {
 }
 
 .section-title {
-    font-family: 'Lora', serif;
-    font-size: 32px;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 30px;
-    padding-bottom: 00px;
-    border-bottom: 2px solid var(--accent-color);
+  font-family: "Geologica", sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 30px;
+  padding-bottom: 00px;
+  border-bottom: 2px solid var(--accent-color);
 }
 
 /* Аккордеон */
@@ -220,12 +233,12 @@ body {
 
 .accordion-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(155, 89, 182, 0.3);
+    box-shadow: 0 5px 20px rgba(32, 32, 32, 0.3);
 }
 
 .accordion-header {
     padding: 10px 25px;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 200;
     color: var(--text-color);
     cursor: pointer;
@@ -235,8 +248,8 @@ body {
 }
 
 .accordion-header:hover {
-    background-color: rgba(155, 89, 182, 0.1);
-    color: var(--accent-color);
+  background-color: rgba(30, 144, 255, 0.12); /* #1e90ff */
+  color: var(--accent-color);
 }
 
 .accordion-header::after {
@@ -294,9 +307,9 @@ body {
 }
 
 .link-item:hover {
-    background-color: rgba(155, 89, 182, 0.15);
-    padding-left: 20px;
-    border-left-width: 5px;
+  background-color: rgba(30, 144, 255, 0.15); /* #1e90ff */
+  padding-left: 20px;
+  border-left-width: 5px;
 }
 
 /* Название сервиса */
@@ -325,76 +338,77 @@ body {
     margin-top: -2px;
 }
 
-/* Адаптивность */
+/* Адаптивность (обновлено под крестик внизу) */
 @media (max-width: 768px) {
-    .hero {
-        background-attachment: scroll;
-    }
-    
-    .hero-title {
-        font-size: 50px;
-    }
-    
-    .hero-logo {
-        max-width: 300px;
-    }
-    
-    .section-title {
-        font-size: 32px;
-    }
-    
-    .container {
-        padding: 0 20px;
-    }
-    
-    .header {
-        padding: 15px 20px;
-    }
-    
-    .side-menu {
-        width: 280px;
-        right: -280px;
-        padding: 60px 30px 30px 30px;
-    }
-    
-    .accordion-header {
-        font-size: 16px;
-        padding: 15px 20px;
-    }
-    
-    .link-item {
-        font-size: 14px;
-        padding: 12px;
-    }
-    
-    .link-name {
-        font-size: 16px;
-    }
-    
-    .link-url {
-        font-size: 13px;
-    }
+  .hero {
+    background-attachment: scroll;
+  }
+
+  .hero-title {
+    font-size: 50px;
+  }
+
+  .hero-logo {
+    max-width: 300px;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .header {
+    padding: 15px 20px;
+  }
+
+  .side-menu {
+    width: 280px;
+    right: -280px;
+    padding: 60px 24px 80px 24px; /* место снизу под крестик */
+  }
+
+  .accordion-header {
+    font-size: 16px;
+    padding: 15px 20px;
+  }
+
+  .link-item {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .link-name {
+    font-size: 16px;
+  }
+
+  .link-url {
+    font-size: 13px;
+  }
 }
 
 @media (max-width: 480px) {
-    .hero-title {
-        font-size: 36px;
-    }
-    
-    .hero-logo {
-        max-width: 250px;
-    }
-    
-    .section-title {
-        font-size: 26px;
-    }
-    
-    .side-menu {
-        width: 100%;
-        right: -100%;
-    }
-    
-    .side-menu.active {
-        right: 0;
-    }
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .hero-logo {
+    max-width: 250px;
+  }
+
+  .section-title {
+    font-size: 26px;
+  }
+
+  .side-menu {
+    width: 100%;
+    right: -100%;
+    padding: 60px 16px 84px 16px; /* место под крестик */
+  }
+
+  .side-menu.active {
+    right: 0;
+  }
 }

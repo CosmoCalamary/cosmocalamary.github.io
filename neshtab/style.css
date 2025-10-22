@@ -184,6 +184,7 @@ body {
     display: inline-block;
 }
 
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -412,3 +413,31 @@ body {
     right: 0;
   }
 }
+
+/* Контейнер для hover-анимации (абсолютное позиционирование) */
+.hover-loader {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 150px;            /* уменьшено в 2 раза: с 400px до 200px */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 2;
+}
+
+.hover-loader.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(8px);
+}
+
+#hoverLoaderVideo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0;            /* убрана скруглённая рамка */
+  box-shadow: none;            /* убрана тень */
+}
+

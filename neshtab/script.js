@@ -69,3 +69,49 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// --- Hover video для newtab.png ---
+(function () {
+  const logo = document.getElementById('newtabLogo');
+  const loader = document.getElementById('hoverLoader');
+  const video = document.getElementById('hoverLoaderVideo');
+
+  if (!logo || !loader || !video) return;
+
+  let isHovering = false;
+
+  function showAndPlay() {
+    loader.classList.add('active');
+    video.currentTime = 0;
+    const playPromise = video.play();
+    if (playPromise && playPromise.catch) {
+      playPromise.catch(() => {/* autoplay блокнут */});
+    }
+  }
+
+  function hideAndStop() {
+    loader.classList.remove('active');
+    video.pause();
+    video.currentTime = 0;
+  }
+
+  // Показ при наведении на newtab.png
+  logo.addEventListener('mouseenter', () => {
+    isHovering = true;
+    showAndPlay();
+  });
+
+  // Скрытие при уходе с newtab.png
+  logo.addEventListener('mouseleave', () => {
+    isHovering = false;
+    setTimeout(() => {
+      if (!isHovering) hideAndStop();
+    }, 100);
+  });
+
+  // Скрытие по клику (если нужно остановить анимацию до перехода)
+  logo.addEventListener('click', (e) => {
+    hideAndStop();
+    // переход по ссылке <a href="internet"> сработает сам
+  });
+})();
