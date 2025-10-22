@@ -22,7 +22,7 @@ html {
 }
 
 body {
-  font-family: "Montserrat Alternates", sans-serif;
+  font-family: "Geologica", sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-color);
   line-height: 1.6;
@@ -120,7 +120,7 @@ body {
   transition: all 0.3s ease;
   display: block;
   padding: 10px 0;
-  font-family: "Montserrat Alternates", sans-serif;
+  font-family: "Geologica", sans-serif;
 }
 
 .side-menu-list a:hover {
@@ -146,7 +146,7 @@ body {
 }
 
 .hero-title {
-  font-family: "Montserrat Alternates", sans-serif;
+  font-family: "Geologica", sans-serif;
   font-size: 80px;
   font-weight: 700;
   color: var(--text-color);
@@ -204,7 +204,7 @@ body {
 }
 
 .section-title {
-  font-family: "Montserrat Alternates", sans-serif;
+  font-family: "Geologica", sans-serif;
   font-size: 32px;
   font-weight: 600;
   color: var(--text-color);
