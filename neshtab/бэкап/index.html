@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>diplonewtab</title>
+    <title>neshtab</title>
     <link rel="icon" type="image/x-icon" href="img/favicon2.ico">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -43,10 +43,17 @@
     <section class="hero">
         <div class="hero-content">
             <a href="#internet">
-                <img src="img/newtab.png" alt="diplonewtab" class="hero-logo">
+            <img src="img/newtab.png" alt="neshtab" class="hero-logo" id="newtabLogo">
             </a>
         </div>
+        <!-- Видео-анимация ВНЕ hero-content, но внутри hero -->
+        <div id="hoverLoader" class="hover-loader">
+            <video id="hoverLoaderVideo" src="img/loading_animation.webm" preload="auto" muted playsinline loop></video>
+        </div>
     </section>
+
+
+    
 
 
 
@@ -1369,7 +1376,167 @@
                 </div>
             </section>
 
-            <!-- Покупки -->
+
+            <!-- Контент :: Задворки -->
+            <section id="kontent-zadvorki" class="section">
+                <h2 class="section-title">Контент :: Задворки</h2>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">Изображения</div>
+                    <div class="accordion-content">
+                        <div class="accordion-item nested">
+                            <div class="accordion-header">Скачивание</div>
+                            <div class="accordion-content">
+                                <a href="https://ru.imgdownloader.com/" class="link-item" target="_blank">
+                                    <span class="link-name">Image Downloader</span>
+                                    <span class="link-url">https://ru.imgdownloader.com/</span>
+                                    <span class="link-desc">Поиск и скачивание изображений из Google</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">Видео</div>
+                    <div class="accordion-content">
+                        <div class="accordion-item nested">
+                            <div class="accordion-header">Скачивание</div>
+                            <div class="accordion-content">
+                                <a href="https://ru.savefrom.net/1-how-to-download-youtube-video/" class="link-item" target="_blank">
+                                    <span class="link-name">SaveFrom YouTube</span>
+                                    <span class="link-url">https://ru.savefrom.net/1-how-to-download-youtube-video/</span>
+                                </a>
+                                <a href="https://loader.to/" class="link-item" target="_blank">
+                                    <span class="link-name">Loader.to</span>
+                                    <span class="link-url">https://loader.to/</span>
+                                </a>
+                                <a href="https://ytmp3.nu/4dD2/" class="link-item" target="_blank">
+                                    <span class="link-name">YouTube to MP3</span>
+                                    <span class="link-url">https://ytmp3.nu/4dD2/</span>
+                                </a>
+                                <a href="https://vk.danilin.org/" class="link-item" target="_blank">
+                                    <span class="link-name">VK Video Downloader</span>
+                                    <span class="link-url">https://vk.danilin.org/</span>
+                                    <span class="link-desc">Скачивание видео из ВКонтакте</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">Музыка</div>
+                    <div class="accordion-content">
+                        <div class="accordion-item nested">
+                            <div class="accordion-header">Скачивание</div>
+                            <div class="accordion-content">
+                                <a href="https://mp3.pm/" class="link-item" target="_blank">
+                                    <span class="link-name">MP3.pm</span>
+                                    <span class="link-url">https://mp3.pm/</span>
+                                    <span class="link-desc">Онлайн поиск и скачивание музыки без регистрации</span>
+                                </a>
+                                <a href="https://ru.hitmotop.com/" class="link-item" target="_blank">
+                                    <span class="link-name">Hitmotop</span>
+                                    <span class="link-url">https://ru.hitmotop.com/</span>
+                                </a>
+                                <a href="https://vk.danilin.org/" class="link-item" target="_blank">
+                                    <span class="link-name">VK Music Downloader</span>
+                                    <span class="link-url">https://vk.danilin.org/</span>
+                                    <span class="link-desc">Скачивание музыки из ВКонтакте</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="accordion-item nested">
+                            <div class="accordion-header">Стриминг</div>
+                            <div class="accordion-content">
+                                <a href="https://music.yandex.ru/" class="link-item" target="_blank">
+                                    <span class="link-name">Яндекс.Музыка</span>
+                                    <span class="link-url">https://music.yandex.ru/</span>
+                                </a>
+                                <a href="https://vk.com/audio" class="link-item" target="_blank">
+                                    <span class="link-name">VK Музыка</span>
+                                    <span class="link-url">https://vk.com/audio</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">Кино</div>
+                    <div class="accordion-content">
+                        <div class="accordion-item nested">
+                            <div class="accordion-header">Онлайн-кинотеатры</div>
+                            <div class="accordion-content">
+                                <a href="https://rezka.ag/" class="link-item" target="_blank">
+                                    <span class="link-name">HDRezka</span>
+                                    <span class="link-url">https://rezka.ag/</span>
+                                </a>
+                                <a href="https://kinokrad.co/" class="link-item" target="_blank">
+                                    <span class="link-name">Kinokrad</span>
+                                    <span class="link-url">https://kinokrad.co/</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="accordion-item nested">
+                            <div class="accordion-header">Торренты</div>
+                            <div class="accordion-content">
+                                <a href="https://rutracker.org/" class="link-item" target="_blank">
+                                    <span class="link-name">RuTracker</span>
+                                    <span class="link-url">https://rutracker.org/</span>
+                                </a>
+                                <a href="https://kinozal.tv/" class="link-item" target="_blank">
+                                    <span class="link-name">Kinozal</span>
+                                    <span class="link-url">https://kinozal.tv/</span>
+                                </a>
+                                <a href="https://www.nnmclub.to/" class="link-item" target="_blank">
+                                    <span class="link-name">NNM-Club</span>
+                                    <span class="link-url">https://www.nnmclub.to/</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">Книги</div>
+                    <div class="accordion-content">
+                        <a href="https://flibusta.is/" class="link-item" target="_blank">
+                            <span class="link-name">Flibusta</span>
+                            <span class="link-url">https://flibusta.is/</span>
+                        </a>
+                        <a href="https://royallib.com/" class="link-item" target="_blank">
+                            <span class="link-name">RoyalLib</span>
+                            <span class="link-url">https://royallib.com/</span>
+                        </a>
+                        <a href="https://coollib.net/" class="link-item" target="_blank">
+                            <span class="link-name">CoolLib</span>
+                            <span class="link-url">https://coollib.net/</span>
+                        </a>
+                        <a href="https://ru.pdfdrive.com/" class="link-item" target="_blank">
+                            <span class="link-name">PDF Drive</span>
+                            <span class="link-url">https://ru.pdfdrive.com/</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">Софт</div>
+                    <div class="accordion-content">
+                        <a href="https://rutracker.org/" class="link-item" target="_blank">
+                            <span class="link-name">RuTracker</span>
+                            <span class="link-url">https://rutracker.org/</span>
+                        </a>
+                        <a href="https://www.nnmclub.to/" class="link-item" target="_blank">
+                            <span class="link-name">NNM-Club</span>
+                            <span class="link-url">https://www.nnmclub.to/</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+                        <!-- Покупки -->
             <section id="pokupki" class="section">
                 <h2 class="section-title">Покупки</h2>
                 
@@ -1536,164 +1703,7 @@
                     </div>
                 </div>
             </section>
-            <!-- Контент :: Задворки -->
-            <section id="kontent-zadvorki" class="section">
-                <h2 class="section-title">Контент :: Задворки</h2>
-                
-                <div class="accordion-item">
-                    <div class="accordion-header">Изображения</div>
-                    <div class="accordion-content">
-                        <div class="accordion-item nested">
-                            <div class="accordion-header">Скачивание</div>
-                            <div class="accordion-content">
-                                <a href="https://ru.imgdownloader.com/" class="link-item" target="_blank">
-                                    <span class="link-name">Image Downloader</span>
-                                    <span class="link-url">https://ru.imgdownloader.com/</span>
-                                    <span class="link-desc">Поиск и скачивание изображений из Google</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="accordion-item">
-                    <div class="accordion-header">Видео</div>
-                    <div class="accordion-content">
-                        <div class="accordion-item nested">
-                            <div class="accordion-header">Скачивание</div>
-                            <div class="accordion-content">
-                                <a href="https://ru.savefrom.net/1-how-to-download-youtube-video/" class="link-item" target="_blank">
-                                    <span class="link-name">SaveFrom YouTube</span>
-                                    <span class="link-url">https://ru.savefrom.net/1-how-to-download-youtube-video/</span>
-                                </a>
-                                <a href="https://loader.to/" class="link-item" target="_blank">
-                                    <span class="link-name">Loader.to</span>
-                                    <span class="link-url">https://loader.to/</span>
-                                </a>
-                                <a href="https://ytmp3.nu/4dD2/" class="link-item" target="_blank">
-                                    <span class="link-name">YouTube to MP3</span>
-                                    <span class="link-url">https://ytmp3.nu/4dD2/</span>
-                                </a>
-                                <a href="https://vk.danilin.org/" class="link-item" target="_blank">
-                                    <span class="link-name">VK Video Downloader</span>
-                                    <span class="link-url">https://vk.danilin.org/</span>
-                                    <span class="link-desc">Скачивание видео из ВКонтакте</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <div class="accordion-header">Музыка</div>
-                    <div class="accordion-content">
-                        <div class="accordion-item nested">
-                            <div class="accordion-header">Скачивание</div>
-                            <div class="accordion-content">
-                                <a href="https://mp3.pm/" class="link-item" target="_blank">
-                                    <span class="link-name">MP3.pm</span>
-                                    <span class="link-url">https://mp3.pm/</span>
-                                    <span class="link-desc">Онлайн поиск и скачивание музыки без регистрации</span>
-                                </a>
-                                <a href="https://ru.hitmotop.com/" class="link-item" target="_blank">
-                                    <span class="link-name">Hitmotop</span>
-                                    <span class="link-url">https://ru.hitmotop.com/</span>
-                                </a>
-                                <a href="https://vk.danilin.org/" class="link-item" target="_blank">
-                                    <span class="link-name">VK Music Downloader</span>
-                                    <span class="link-url">https://vk.danilin.org/</span>
-                                    <span class="link-desc">Скачивание музыки из ВКонтакте</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="accordion-item nested">
-                            <div class="accordion-header">Стриминг</div>
-                            <div class="accordion-content">
-                                <a href="https://music.yandex.ru/" class="link-item" target="_blank">
-                                    <span class="link-name">Яндекс.Музыка</span>
-                                    <span class="link-url">https://music.yandex.ru/</span>
-                                </a>
-                                <a href="https://vk.com/audio" class="link-item" target="_blank">
-                                    <span class="link-name">VK Музыка</span>
-                                    <span class="link-url">https://vk.com/audio</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <div class="accordion-header">Кино</div>
-                    <div class="accordion-content">
-                        <div class="accordion-item nested">
-                            <div class="accordion-header">Онлайн-кинотеатры</div>
-                            <div class="accordion-content">
-                                <a href="https://rezka.ag/" class="link-item" target="_blank">
-                                    <span class="link-name">HDRezka</span>
-                                    <span class="link-url">https://rezka.ag/</span>
-                                </a>
-                                <a href="https://kinokrad.co/" class="link-item" target="_blank">
-                                    <span class="link-name">Kinokrad</span>
-                                    <span class="link-url">https://kinokrad.co/</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="accordion-item nested">
-                            <div class="accordion-header">Торренты</div>
-                            <div class="accordion-content">
-                                <a href="https://rutracker.org/" class="link-item" target="_blank">
-                                    <span class="link-name">RuTracker</span>
-                                    <span class="link-url">https://rutracker.org/</span>
-                                </a>
-                                <a href="https://kinozal.tv/" class="link-item" target="_blank">
-                                    <span class="link-name">Kinozal</span>
-                                    <span class="link-url">https://kinozal.tv/</span>
-                                </a>
-                                <a href="https://www.nnmclub.to/" class="link-item" target="_blank">
-                                    <span class="link-name">NNM-Club</span>
-                                    <span class="link-url">https://www.nnmclub.to/</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <div class="accordion-header">Книги</div>
-                    <div class="accordion-content">
-                        <a href="https://flibusta.is/" class="link-item" target="_blank">
-                            <span class="link-name">Flibusta</span>
-                            <span class="link-url">https://flibusta.is/</span>
-                        </a>
-                        <a href="https://royallib.com/" class="link-item" target="_blank">
-                            <span class="link-name">RoyalLib</span>
-                            <span class="link-url">https://royallib.com/</span>
-                        </a>
-                        <a href="https://coollib.net/" class="link-item" target="_blank">
-                            <span class="link-name">CoolLib</span>
-                            <span class="link-url">https://coollib.net/</span>
-                        </a>
-                        <a href="https://ru.pdfdrive.com/" class="link-item" target="_blank">
-                            <span class="link-name">PDF Drive</span>
-                            <span class="link-url">https://ru.pdfdrive.com/</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <div class="accordion-header">Софт</div>
-                    <div class="accordion-content">
-                        <a href="https://rutracker.org/" class="link-item" target="_blank">
-                            <span class="link-name">RuTracker</span>
-                            <span class="link-url">https://rutracker.org/</span>
-                        </a>
-                        <a href="https://www.nnmclub.to/" class="link-item" target="_blank">
-                            <span class="link-name">NNM-Club</span>
-                            <span class="link-url">https://www.nnmclub.to/</span>
-                        </a>
-                    </div>
-                </div>
-            </section>
 
             <!-- Обучение -->
             <section id="obuchenie" class="section">
