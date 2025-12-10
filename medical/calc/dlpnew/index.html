@@ -2,25 +2,26 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Калькулятор дозы</title>
+  <title>Доза</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
   <!-- PWA Settings for iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Dose">
+  <meta name="apple-mobile-web-app-title" content="Доза">
 
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Icons -->
-  <!-- PNG Base64 Icon for iOS (Apple Touch Icon) - 180x180 -->
-  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEAklEQVR4nO3dMW4TURSF4YDoaOhoqakQPZtiIWyKHlGxB3ZBMVKwHA6FPfe8R/i+PnpXmj93HMvxvHj95t0D/MnL1QOwL3EQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIHq1eoDfPnz+cdsPfv/y/txJzvL267fbfvDnp4/nTnKbF8u/guHmJp7apJKbm3hqbSUr4zgxi0sLEzkxi0urElkTx1AWl8qJDGVxqZ/IghekhTJqpxwKZdROudSOo3nNOmc1r1m5j2oczTI6J/Z/m5sn9uLolzF9br+M8rmlOFaVMXf6qjKapzfiWFvGxAxry6jN4O1zovE4dlgbh7Mm2WFtHKYnsTmIZuPYZ20c7p9nn7VxGJ3H5iASB9FgHLvdUw73TLXbPeUwN5XNQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRANxrHJ9+xcuWeqTb6N6crcVDYHkTiIZuPY7c5y/zy73VlG57E5iMbj2Gd5nDXJPstjehKbg6gRxw7L49wZdlgehRlKm2NtHxOnr+2jc3rvtrKqj7lzV/VRO7f6mqPfx/SJ/T6aJ7ZfkDb76JzVvFrlFhf8tdK5Zs0KO9esv6U8NeFMnppwMs9b+Yv/93krVzyp6dEO76M8bBUHu/H2OZE4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIH0avVA/z2r3/i8ql//VOx6z9D+mw+q/3o2XyefmUcz+y/PB6e3X/irImj8PTeciKFJyz3E1nwgrTzXOfm06M7z97uP+G7HUfzmnXOal6zch/VOPrPgp8+sf/b3DyxF0e/jOlz+2WUzy3FsaqMudNXldE8vRHH2jImZlhbRm0Gb58Tjcexw9o4nDXJDmvjMD2JzUE0G8c+a+Nw/zz7rI3D6Dw2B5E4iAbj2O2ecrhnqt3uKYe5qWwOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRANxrHJ9+xcuWeqTb6N6crcVDYHkTiIZuPY7c5y/zy73VlG57E5iMbj2Gd5nDXJPstjehKbg6gRxw7L49wZdlgehRlKm2NtHxOnr+2jc3rvtrKqj7lzV/VRO7f6mqPfx/SJ/T6aJ7ZfkDb76JzVvFrlFhf8tdK5Zs0KO9esv6U8NeFMnppwMs9b+Yv/93krVzyp6dEO76M8bBUHu/H2OZE4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIH0avVA/z2r3/i8ql//VOx6z9D+mw+q/3o2XyefmUcz+y/PB6e3X/irImj8PTeciKFJyz3E1nwgrTzXOfm06M7z97uP+G7HUfzmnXOal6zch/VOPrPgp8+sf/b3DyxF0e/jOlz+2WUzy3FsaqMudNXldE8vRHH2jImZlhbRm0Gb58Tjcexw9o4nDXJDmvjMD2JzUE0G8c+a+Nw/zz7rI3D6Dw2B5E4iAbj2O2ecrhnqt3uKYe5qWwOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRA9YbMOK9dwoMAAAAAElFTkSuQmCC">
-  
-  <!-- Standard Favicon (fallback) -->
-  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEAklEQVR4nO3dMW4TURSF4YDoaOhoqakQPZtiIWyKHlGxB3ZBMVKwHA6FPfe8R/i+PnpXmj93HMvxvHj95t0D/MnL1QOwL3EQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIHq1eoDfPnz+cdsPfv/y/txJzvL267fbfvDnp4/nTnKbF8u/guHmJp7apJKbm3hqbSUr4zgxi0sLEzkxi0urElkTx1AWl8qJDGVxqZ/IghekhTJqpxwKZdROudSOo3nNOmc1r1m5j2oczTI6J/Z/m5sn9uLolzF9br+M8rmlOFaVMXf6qjKapzfiWFvGxAxry6jN4O1zovE4dlgbh7Mm2WFtHKYnsTmIZuPYZ20c7p9nn7VxGJ3H5iASB9FgHLvdUw73TLXbPeUwN5XNQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRANxrHJ9+xcuWeqTb6N6crcVDYHkTiIZuPY7c5y/zy73VlG57E5iMbj2Gd5nDXJPstjehKbg6gRxw7L49wZdlgehRlKm2NtHxOnr+2jc3rvtrKqj7lzV/VRO7f6mqPfx/SJ/T6aJ7ZfkDb76JzVvFrlFhf8tdK5Zs0KO9esv6U8NeFMnppwMs9b+Yv/93krVzyp6dEO76M8bBUHu/H2OZE4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIH0avVA/z2r3/i8ql//VOx6z9D+mw+q/3o2XyefmUcz+y/PB6e3X/irImj8PTeciKFJyz3E1nwgrTzXOfm06M7z97uP+G7HUfzmnXOal6zch/VOPrPgp8+sf/b3DyxF0e/jOlz+2WUzy3FsaqMudNXldE8vRHH2jImZlhbRm0Gb58Tjcexw9o4nDXJDmvjMD2JzUE0G8c+a+Nw/zz7rI3D6Dw2B5E4iAbj2O2ecrhnqt3uKYe5qWwOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRANxrHJ9+xcuWeqTb6N6crcVDYHkTiIZuPY7c5y/zy73VlG57E5iMbj2Gd5nDXJPstjehKbg6gRxw7L49wZdlgehRlKm2NtHxOnr+2jc3rvtrKqj7lzV/VRO7f6mqPfx/SJ/T6aJ7ZfkDb76JzVvFrlFhf8tdK5Zs0KO9esv6U8NeFMnppwMs9b+Yv/93krVzyp6dEO76M8bBUHu/H2OZE4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIH0avVA/z2r3/i8ql//VOx6z9D+mw+q/3o2XyefmUcz+y/PB6e3X/irImj8PTeciKFJyz3E1nwgrTzXOfm06M7z97uP+G7HUfzmnXOal6zch/VOPrPgp8+sf/b3DyxF0e/jOlz+2WUzy3FsaqMudNXldE8vRHH2jImZlhbRm0Gb58Tjcexw9o4nDXJDmvjMD2JzUE0G8c+a+Nw/zz7rI3D6Dw2B5E4iAbj2O2ecrhnqt3uKYe5qWwOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRA9YbMOK9dwoMAAAAAElFTkSuQmCC">
+  <!-- 
+    IOS FIX: Apple не поддерживает Base64 для иконок домашнего экрана. 
+    Используем внешнюю ссылку на иконку в стиле iOS (синий калькулятор).
+  -->
+  <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/240/calculator.png">
+  <!-- Fallback для Android/Browser -->
+  <link rel="icon" href="https://img.icons8.com/fluency/240/calculator.png">
 
   <style>
     :root {
