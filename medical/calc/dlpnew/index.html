@@ -101,7 +101,7 @@
     }
 
     .title-block {
-      max-width: 80%;
+      width: 100%;
     }
 
     h1 {
@@ -114,29 +114,8 @@
     .subtitle {
       font-size: 13px;
       color: var(--text-muted);
-      max-width: 380px;
+      max-width: 420px;
       line-height: 1.4;
-    }
-
-    .badge {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: radial-gradient(circle at top, rgba(148, 163, 184, 0.18), rgba(15, 23, 42, 0.85));
-      font-size: 11px;
-      color: var(--text-muted);
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .icon-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3);
     }
 
     main {
@@ -262,9 +241,15 @@
 
     .controls-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 4px;
+      gap: 12px;
+      margin-top: 6px;
+      width: 100%; /* Занимаем всю ширину */
+    }
+
+    .controls-row button {
+      flex: 1; /* Кнопки делят ширину пополам */
+      justify-content: center;
+      padding: 10px 14px; /* Чуть больше паддинг для удобства */
     }
 
     button {
@@ -284,6 +269,7 @@
       background: linear-gradient(135deg, #22d3ee, #3b82f6);
       color: #0b1120;
       box-shadow: 0 12px 30px rgba(37, 99, 235, 0.55);
+      font-weight: 500;
     }
 
     .btn-primary:hover {
@@ -372,7 +358,7 @@
     }
 
     .timer-btn {
-      width: 64px; /* Fixed width to prevent jump on text change */
+      width: 64px; /* Fixed width */
       background: rgba(34, 211, 238, 0.15);
       color: #7dd3fc;
       border: 1px solid rgba(125, 211, 252, 0.3);
@@ -407,7 +393,7 @@
       top: 0;
       left: 0;
       height: 100%;
-      width: 0%; /* Logic handles this */
+      width: 0%; 
       background: linear-gradient(90deg, #3b82f6, #22d3ee);
       border-radius: 99px;
       transition: width 1s linear;
@@ -422,7 +408,6 @@
       text-align: right;
     }
 
-    /* Более читаемые option в тёмной теме */
     select option {
       background-color: #020617;
       color: #e5e7eb;
@@ -455,10 +440,6 @@
           <div class="subtitle">
             Быстрый расчёт эффективной дозы КТ по DLP для взрослых пациентов.
           </div>
-        </div>
-        <div class="badge">
-          <span class="icon-dot"></span>
-          <span>Только взрослые · DLP→E</span>
         </div>
       </header>
 
