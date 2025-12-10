@@ -33,7 +33,7 @@
       box-sizing: border-box;
     }
 
-    /* Глобальное применение шрифта Inter для всех элементов */
+    /* Глобальное применение шрифта Inter */
     body, button, input, select, textarea {
       font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
     }
@@ -195,7 +195,7 @@
       border: 1px solid rgba(148, 163, 184, 0.35);
       background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
       color: var(--text-main);
-      font-size: 16px; /* 16px prevents iOS zoom */
+      font-size: 16px;
       outline: none;
       transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
       appearance: none;
@@ -243,13 +243,13 @@
       display: flex;
       gap: 12px;
       margin-top: 6px;
-      width: 100%; /* Занимаем всю ширину */
+      width: 100%;
     }
 
     .controls-row button {
-      flex: 1; /* Кнопки делят ширину пополам */
+      flex: 1;
       justify-content: center;
-      padding: 10px 14px; /* Чуть больше паддинг для удобства */
+      padding: 10px 14px;
     }
 
     button {
@@ -358,7 +358,7 @@
     }
 
     .timer-btn {
-      width: 64px; /* Fixed width */
+      width: 64px;
       background: rgba(34, 211, 238, 0.15);
       color: #7dd3fc;
       border: 1px solid rgba(125, 211, 252, 0.3);
@@ -377,6 +377,27 @@
     
     .timer-btn.active:hover {
       background: rgba(249, 115, 115, 0.25);
+    }
+
+    /* Анимация мигания кнопки */
+    @keyframes flash-alert {
+      0%, 100% {
+        background-color: rgba(249, 115, 115, 0.15);
+        color: #fca5a5;
+        border-color: rgba(249, 115, 115, 0.3);
+        box-shadow: none;
+      }
+      50% {
+        background-color: #ef4444;
+        color: #ffffff;
+        border-color: #ef4444;
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+      }
+    }
+
+    .timer-btn.finished {
+      /* 10 раз по 0.3 секунды = 3 секунды активного мигания */
+      animation: flash-alert 0.3s ease-in-out 10;
     }
 
     .timer-track {
@@ -625,10 +646,32 @@
       isTimerRunning = false;
       timerBtn.textContent = 'Старт';
       timerBtn.classList.remove('active');
+      timerBtn.classList.remove('finished');
       
-      // Reset to full if stopped manually or finished
+      // Reset to full
       timeRemaining = TIMER_DURATION;
       updateTimerUI();
+    }
+    
+    function timerFinished() {
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      timerDisplay.textContent = "00:00";
+      timerFill.style.width = "0%";
+      
+      // Попытка вибрации (Android/совместимые браузеры)
+      if (navigator.vibrate) {
+        navigator.vibrate([500, 200, 500]);
+      }
+
+      // Запускаем визуальный алерт
+      timerBtn.classList.add('finished');
+      timerBtn.textContent = '00:00';
+      
+      // Ждем окончания анимации (3 сек) и сбрасываем
+      setTimeout(() => {
+        stopTimer();
+      }, 3000);
     }
 
     function startTimer() {
@@ -640,6 +683,7 @@
       isTimerRunning = true;
       timerBtn.textContent = 'Стоп';
       timerBtn.classList.add('active');
+      timerBtn.classList.remove('finished');
       
       // Immediate update
       updateTimerUI();
@@ -647,7 +691,7 @@
       timerInterval = setInterval(() => {
         timeRemaining--;
         if (timeRemaining < 0) {
-          stopTimer(); // Timer finished
+          timerFinished();
           return;
         }
         updateTimerUI();
