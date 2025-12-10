@@ -23,16 +23,24 @@
       --radius-xl: 18px;
       --radius-lg: 12px;
       --shadow-soft: 0 30px 80px rgba(15, 23, 42, 0.8);
+      
+      /* Timer specific */
+      --timer-bg: rgba(30, 41, 59, 0.6);
+      --timer-bar-bg: rgba(148, 163, 184, 0.2);
     }
 
     * {
       box-sizing: border-box;
     }
 
+    /* Глобальное применение шрифта Inter для всех элементов */
+    body, button, input, select, textarea {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
       background:
         radial-gradient(circle at top left, #1e293b 0, transparent 55%),
         radial-gradient(circle at bottom right, #0f172a 0, transparent 55%),
@@ -208,7 +216,7 @@
       border: 1px solid rgba(148, 163, 184, 0.35);
       background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
       color: var(--text-main);
-      font-size: 14px;
+      font-size: 16px; /* 16px prevents iOS zoom */
       outline: none;
       transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
       appearance: none;
@@ -268,8 +276,8 @@
       transition: transform 120ms ease, box-shadow 120ms ease, background 160ms ease, color 160ms ease;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      font-family: "Inter", -apple-system, system-ui, sans-serif;
     }
 
     .btn-primary {
@@ -351,6 +359,67 @@
       font-size: 11px;
       color: var(--text-muted);
       line-height: 1.4;
+    }
+
+    /* Timer Styles */
+    .timer-section {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .timer-btn {
+      width: 64px; /* Fixed width to prevent jump on text change */
+      background: rgba(34, 211, 238, 0.15);
+      color: #7dd3fc;
+      border: 1px solid rgba(125, 211, 252, 0.3);
+      font-weight: 500;
+    }
+    
+    .timer-btn:hover {
+      background: rgba(34, 211, 238, 0.25);
+    }
+
+    .timer-btn.active {
+      background: rgba(249, 115, 115, 0.15);
+      color: #fca5a5;
+      border-color: rgba(249, 115, 115, 0.3);
+    }
+    
+    .timer-btn.active:hover {
+      background: rgba(249, 115, 115, 0.25);
+    }
+
+    .timer-track {
+      flex: 1;
+      height: 6px;
+      background: var(--timer-bar-bg);
+      border-radius: 99px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .timer-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%; /* Logic handles this */
+      background: linear-gradient(90deg, #3b82f6, #22d3ee);
+      border-radius: 99px;
+      transition: width 1s linear;
+    }
+
+    .timer-display {
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-main);
+      font-weight: 600;
+      min-width: 42px;
+      text-align: right;
     }
 
     /* Более читаемые option в тёмной теме */
@@ -468,6 +537,16 @@
           </div>
         </section>
       </main>
+      
+      <!-- Timer Section -->
+      <div class="timer-section">
+        <button id="timerBtn" class="timer-btn">Старт</button>
+        <div class="timer-track">
+          <div id="timerFill" class="timer-fill" style="width: 100%;"></div>
+        </div>
+        <div id="timerDisplay" class="timer-display">02:00</div>
+      </div>
+
     </div>
   </div>
 
@@ -479,7 +558,7 @@
       chest32: 0.012,      // Грудная клетка, 32 см
       abdomen32: 0.014,    // Брюшная полость, 32 см
       legs32: 0.00020      // Нижние конечности, 32 см
-    }; // значения для взрослых из таблицы дозовых коэффициентов [file:1]
+    }; 
 
     const dlpInput = document.getElementById('dlp');
     const regionSelect = document.getElementById('region');
@@ -490,6 +569,16 @@
     const eValue = document.getElementById('eValue');
     const metaDlp = document.getElementById('metaDlp');
     const metaCoeff = document.getElementById('metaCoeff');
+
+    // Timer Elements
+    const timerBtn = document.getElementById('timerBtn');
+    const timerFill = document.getElementById('timerFill');
+    const timerDisplay = document.getElementById('timerDisplay');
+    
+    let timerInterval = null;
+    let isTimerRunning = false;
+    const TIMER_DURATION = 120; // 2 minutes in seconds
+    let timeRemaining = TIMER_DURATION;
 
     function formatNumber(value, digits = 3) {
       if (!isFinite(value)) return '—';
@@ -537,6 +626,53 @@
       dlpInput.focus();
     }
 
+    // Timer Logic
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function updateTimerUI() {
+      timerDisplay.textContent = formatTime(timeRemaining);
+      const percent = (timeRemaining / TIMER_DURATION) * 100;
+      timerFill.style.width = `${percent}%`;
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      timerBtn.textContent = 'Старт';
+      timerBtn.classList.remove('active');
+      
+      // Reset to full if stopped manually or finished
+      timeRemaining = TIMER_DURATION;
+      updateTimerUI();
+    }
+
+    function startTimer() {
+      if (isTimerRunning) {
+        stopTimer();
+        return;
+      }
+
+      isTimerRunning = true;
+      timerBtn.textContent = 'Стоп';
+      timerBtn.classList.add('active');
+      
+      // Immediate update
+      updateTimerUI();
+
+      timerInterval = setInterval(() => {
+        timeRemaining--;
+        if (timeRemaining < 0) {
+          stopTimer(); // Timer finished
+          return;
+        }
+        updateTimerUI();
+      }, 1000);
+    }
+
     calcBtn.addEventListener('click', function (e) {
       e.preventDefault();
       calculate();
@@ -552,6 +688,11 @@
         e.preventDefault();
         calculate();
       }
+    });
+
+    timerBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      startTimer();
     });
   </script>
 </body>
