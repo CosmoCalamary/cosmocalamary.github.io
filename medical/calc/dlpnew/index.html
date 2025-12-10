@@ -2,13 +2,23 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Калькулятор эффективной дозы</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Калькулятор дозы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <!-- PWA Settings for iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Dose Calc">
 
-  <!-- Inter -->
+  <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Icons (Embedded SVG via Base64) -->
+  <!-- Icon Description: Dark background with 4 blue/cyan rounded squares mimicking a calculator -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzBiMTAyMCIvPjxyZWN0IHg9IjExMCIgeT0iMTEwIiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjEyNSIgcng9IjMyIiBmaWxsPSIzYjgyZjYiLz48cmVjdCB4PSIyNzYiIHk9IjExMCIgd2lkdGg9IjEyNSIgaGVpZ2h0PSIxMjUiIHJ4PSIzMiIgZmlsbD0iIzIyZDNlZSIvPjxyZWN0IHg9IjExMCIgeT0iMjc2IiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjEyNSIgcng9IjMyIiBmaWxsPSIjMjJkM2VlIi8+PHJlY3QgeD0iMjc2IiB5PSIyNzYiIHdpZHRoPSIxMjUiIGhlaWdodD0iMTI1IiByeD0iMzIiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=">
+  <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzBiMTAyMCIvPjxyZWN0IHg9IjExMCIgeT0iMTEwIiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjEyNSIgcng9IjMyIiBmaWxsPSIzYjgyZjYiLz48cmVjdCB4PSIyNzYiIHk9IjExMCIgd2lkdGg9IjEyNSIgaGVpZ2h0PSIxMjUiIHJ4PSIzMiIgZmlsbD0iIzIyZDNlZSIvPjxyZWN0IHg9IjExMCIgeT0iMjc2IiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjEyNSIgcng9IjMyIiBmaWxsPSIjMjJkM2VlIi8+PHJlY3QgeD0iMjc2IiB5PSIyNzYiIHdpZHRoPSIxMjUiIGhlaWdodD0iMTI1IiByeD0iMzIiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=">
 
   <style>
     :root {
@@ -31,6 +41,8 @@
 
     * {
       box-sizing: border-box;
+      /* Отключаем стандартное выделение при касании на мобильных */
+      -webkit-tap-highlight-color: transparent;
     }
 
     /* Глобальное применение шрифта Inter */
@@ -50,6 +62,9 @@
       align-items: center;
       justify-content: center;
       padding: 32px 16px;
+      /* Исправление скролла на iOS в PWA режиме */
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     .shell {
@@ -190,7 +205,7 @@
     input[type="text"],
     select {
       width: 100%;
-      padding: 8px 10px;
+      padding: 10px 12px; /* Чуть больше паддинг для тача */
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.35);
       background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
@@ -215,7 +230,7 @@
     .select-wrap::after {
       content: "▾";
       position: absolute;
-      right: 10px;
+      right: 14px;
       top: 50%;
       transform: translateY(-50%);
       font-size: 10px;
@@ -249,14 +264,14 @@
     .controls-row button {
       flex: 1;
       justify-content: center;
-      padding: 10px 14px;
+      padding: 12px 14px; /* Кнопки еще выше для пальца */
     }
 
     button {
       border: none;
       border-radius: 999px;
       padding: 8px 14px;
-      font-size: 13px;
+      font-size: 14px; /* Чуть крупнее текст кнопок */
       cursor: pointer;
       transition: transform 120ms ease, box-shadow 120ms ease, background 160ms ease, color 160ms ease;
       display: inline-flex;
@@ -272,9 +287,9 @@
       font-weight: 500;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 36px rgba(37, 99, 235, 0.75);
+    .btn-primary:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.55);
     }
 
     .btn-ghost {
@@ -283,9 +298,8 @@
       border: 1px solid rgba(148, 163, 184, 0.4);
     }
 
-    .btn-ghost:hover {
+    .btn-ghost:active {
       background: rgba(30, 64, 175, 0.4);
-      color: var(--text-main);
     }
 
     .result-main {
@@ -363,22 +377,17 @@
       color: #7dd3fc;
       border: 1px solid rgba(125, 211, 252, 0.3);
       font-weight: 500;
+      font-size: 13px;
+      padding: 0;
+      height: 36px;
     }
     
-    .timer-btn:hover {
-      background: rgba(34, 211, 238, 0.25);
-    }
-
     .timer-btn.active {
       background: rgba(249, 115, 115, 0.15);
       color: #fca5a5;
       border-color: rgba(249, 115, 115, 0.3);
     }
     
-    .timer-btn.active:hover {
-      background: rgba(249, 115, 115, 0.25);
-    }
-
     /* Анимация мигания кнопки */
     @keyframes flash-alert {
       0%, 100% {
@@ -396,7 +405,6 @@
     }
 
     .timer-btn.finished {
-      /* 10 раз по 0.3 секунды = 3 секунды активного мигания */
       animation: flash-alert 0.3s ease-in-out 10;
     }
 
@@ -659,7 +667,7 @@
       timerDisplay.textContent = "00:00";
       timerFill.style.width = "0%";
       
-      // Попытка вибрации (Android/совместимые браузеры)
+      // Попытка вибрации (Android only)
       if (navigator.vibrate) {
         navigator.vibrate([500, 200, 500]);
       }
