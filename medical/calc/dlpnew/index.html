@@ -8,17 +8,19 @@
   <!-- PWA Settings for iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Dose Calc">
+  <meta name="apple-mobile-web-app-title" content="Dose">
 
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Icons (Embedded SVG via Base64) -->
-  <!-- Icon Description: Dark background with 4 blue/cyan rounded squares mimicking a calculator -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzBiMTAyMCIvPjxyZWN0IHg9IjExMCIgeT0iMTEwIiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjEyNSIgcng9IjMyIiBmaWxsPSIzYjgyZjYiLz48cmVjdCB4PSIyNzYiIHk9IjExMCIgd2lkdGg9IjEyNSIgaGVpZ2h0PSIxMjUiIHJ4PSIzMiIgZmlsbD0iIzIyZDNlZSIvPjxyZWN0IHg9IjExMCIgeT0iMjc2IiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjEyNSIgcng9IjMyIiBmaWxsPSIjMjJkM2VlIi8+PHJlY3QgeD0iMjc2IiB5PSIyNzYiIHdpZHRoPSIxMjUiIGhlaWdodD0iMTI1IiByeD0iMzIiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=">
-  <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzBiMTAyMCIvPjxyZWN0IHg9IjExMCIgeT0iMTEwIiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjEyNSIgcng9IjMyIiBmaWxsPSIzYjgyZjYiLz48cmVjdCB4PSIyNzYiIHk9IjExMCIgd2lkdGg9IjEyNSIgaGVpZ2h0PSIxMjUiIHJ4PSIzMiIgZmlsbD0iIzIyZDNlZSIvPjxyZWN0IHg9IjExMCIgeT0iMjc2IiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjEyNSIgcng9IjMyIiBmaWxsPSIjMjJkM2VlIi8+PHJlY3QgeD0iMjc2IiB5PSIyNzYiIHdpZHRoPSIxMjUiIGhlaWdodD0iMTI1IiByeD0iMzIiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=">
+  <!-- Icons -->
+  <!-- PNG Base64 Icon for iOS (Apple Touch Icon) - 180x180 -->
+  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEAklEQVR4nO3dMW4TURSF4YDoaOhoqakQPZtiIWyKHlGxB3ZBMVKwHA6FPfe8R/i+PnpXmj93HMvxvHj95t0D/MnL1QOwL3EQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIHq1eoDfPnz+cdsPfv/y/txJzvL267fbfvDnp4/nTnKbF8u/guHmJp7apJKbm3hqbSUr4zgxi0sLEzkxi0urElkTx1AWl8qJDGVxqZ/IghekhTJqpxwKZdROudSOo3nNOmc1r1m5j2oczTI6J/Z/m5sn9uLolzF9br+M8rmlOFaVMXf6qjKapzfiWFvGxAxry6jN4O1zovE4dlgbh7Mm2WFtHKYnsTmIZuPYZ20c7p9nn7VxGJ3H5iASB9FgHLvdUw73TLXbPeUwN5XNQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRANxrHJ9+xcuWeqTb6N6crcVDYHkTiIZuPY7c5y/zy73VlG57E5iMbj2Gd5nDXJPstjehKbg6gRxw7L49wZdlgehRlKm2NtHxOnr+2jc3rvtrKqj7lzV/VRO7f6mqPfx/SJ/T6aJ7ZfkDb76JzVvFrlFhf8tdK5Zs0KO9esv6U8NeFMnppwMs9b+Yv/93krVzyp6dEO76M8bBUHu/H2OZE4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIH0avVA/z2r3/i8ql//VOx6z9D+mw+q/3o2XyefmUcz+y/PB6e3X/irImj8PTeciKFJyz3E1nwgrTzXOfm06M7z97uP+G7HUfzmnXOal6zch/VOPrPgp8+sf/b3DyxF0e/jOlz+2WUzy3FsaqMudNXldE8vRHH2jImZlhbRm0Gb58Tjcexw9o4nDXJDmvjMD2JzUE0G8c+a+Nw/zz7rI3D6Dw2B5E4iAbj2O2ecrhnqt3uKYe5qWwOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRANxrHJ9+xcuWeqTb6N6crcVDYHkTiIZuPY7c5y/zy73VlG57E5iMbj2Gd5nDXJPstjehKbg6gRxw7L49wZdlgehRlKm2NtHxOnr+2jc3rvtrKqj7lzV/VRO7f6mqPfx/SJ/T6aJ7ZfkDb76JzVvFrlFhf8tdK5Zs0KO9esv6U8NeFMnppwMs9b+Yv/93krVzyp6dEO76M8bBUHu/H2OZE4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIH0avVA/z2r3/i8ql//VOx6z9D+mw+q/3o2XyefmUcz+y/PB6e3X/irImj8PTeciKFJyz3E1nwgrTzXOfm06M7z97uP+G7HUfzmnXOal6zch/VOPrPgp8+sf/b3DyxF0e/jOlz+2WUzy3FsaqMudNXldE8vRHH2jImZlhbRm0Gb58Tjcexw9o4nDXJDmvjMD2JzUE0G8c+a+Nw/zz7rI3D6Dw2B5E4iAbj2O2ecrhnqt3uKYe5qWwOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRA9YbMOK9dwoMAAAAAElFTkSuQmCC">
+  
+  <!-- Standard Favicon (fallback) -->
+  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEAklEQVR4nO3dMW4TURSF4YDoaOhoqakQPZtiIWyKHlGxB3ZBMVKwHA6FPfe8R/i+PnpXmj93HMvxvHj95t0D/MnL1QOwL3EQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIHq1eoDfPnz+cdsPfv/y/txJzvL267fbfvDnp4/nTnKbF8u/guHmJp7apJKbm3hqbSUr4zgxi0sLEzkxi0urElkTx1AWl8qJDGVxqZ/IghekhTJqpxwKZdROudSOo3nNOmc1r1m5j2oczTI6J/Z/m5sn9uLolzF9br+M8rmlOFaVMXf6qjKapzfiWFvGxAxry6jN4O1zovE4dlgbh7Mm2WFtHKYnsTmIZuPYZ20c7p9nn7VxGJ3H5iASB9FgHLvdUw73TLXbPeUwN5XNQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRANxrHJ9+xcuWeqTb6N6crcVDYHkTiIZuPY7c5y/zy73VlG57E5iMbj2Gd5nDXJPstjehKbg6gRxw7L49wZdlgehRlKm2NtHxOnr+2jc3rvtrKqj7lzV/VRO7f6mqPfx/SJ/T6aJ7ZfkDb76JzVvFrlFhf8tdK5Zs0KO9esv6U8NeFMnppwMs9b+Yv/93krVzyp6dEO76M8bBUHu/H2OZE4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIH0avVA/z2r3/i8ql//VOx6z9D+mw+q/3o2XyefmUcz+y/PB6e3X/irImj8PTeciKFJyz3E1nwgrTzXOfm06M7z97uP+G7HUfzmnXOal6zch/VOPrPgp8+sf/b3DyxF0e/jOlz+2WUzy3FsaqMudNXldE8vRHH2jImZlhbRm0Gb58Tjcexw9o4nDXJDmvjMD2JzUE0G8c+a+Nw/zz7rI3D6Dw2B5E4iAbj2O2ecrhnqt3uKYe5qWwOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRANxrHJ9+xcuWeqTb6N6crcVDYHkTiIZuPY7c5y/zy73VlG57E5iMbj2Gd5nDXJPstjehKbg6gRxw7L49wZdlgehRlKm2NtHxOnr+2jc3rvtrKqj7lzV/VRO7f6mqPfx/SJ/T6aJ7ZfkDb76JzVvFrlFhf8tdK5Zs0KO9esv6U8NeFMnppwMs9b+Yv/93krVzyp6dEO76M8bBUHu/H2OZE4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIH0avVA/z2r3/i8ql//VOx6z9D+mw+q/3o2XyefmUcz+y/PB6e3X/irImj8PTeciKFJyz3E1nwgrTzXOfm06M7z97uP+G7HUfzmnXOal6zch/VOPrPgp8+sf/b3DyxF0e/jOlz+2WUzy3FsaqMudNXldE8vRHH2jImZlhbRm0Gb58Tjcexw9o4nDXJDmvjMD2JzUE0G8c+a+Nw/zz7rI3D6Dw2B5E4iAbj2O2ecrhnqt3uKYe5qWwOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRA9YbMOK9dwoMAAAAAElFTkSuQmCC">
 
   <style>
     :root {
@@ -41,7 +43,6 @@
 
     * {
       box-sizing: border-box;
-      /* Отключаем стандартное выделение при касании на мобильных */
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -62,7 +63,6 @@
       align-items: center;
       justify-content: center;
       padding: 32px 16px;
-      /* Исправление скролла на iOS в PWA режиме */
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
     }
@@ -205,7 +205,7 @@
     input[type="text"],
     select {
       width: 100%;
-      padding: 10px 12px; /* Чуть больше паддинг для тача */
+      padding: 10px 12px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.35);
       background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
@@ -264,14 +264,14 @@
     .controls-row button {
       flex: 1;
       justify-content: center;
-      padding: 12px 14px; /* Кнопки еще выше для пальца */
+      padding: 12px 14px;
     }
 
     button {
       border: none;
       border-radius: 999px;
       padding: 8px 14px;
-      font-size: 14px; /* Чуть крупнее текст кнопок */
+      font-size: 14px;
       cursor: pointer;
       transition: transform 120ms ease, box-shadow 120ms ease, background 160ms ease, color 160ms ease;
       display: inline-flex;
@@ -388,7 +388,6 @@
       border-color: rgba(249, 115, 115, 0.3);
     }
     
-    /* Анимация мигания кнопки */
     @keyframes flash-alert {
       0%, 100% {
         background-color: rgba(249, 115, 115, 0.15);
@@ -542,7 +541,7 @@
 
             <div class="footer-note">
               Расчёт выполняется по формуле E = DLP × k, где k — дозовый коэффициент
-              для выбранной области и фантома (взрослые пациенты, мЗв/(мГр·см)). [file:1]
+              для выбранной области и фантома (взрослые пациенты, мЗв/(мГр·см)).
             </div>
           </div>
         </section>
