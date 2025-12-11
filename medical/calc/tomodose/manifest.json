@@ -1,0 +1,20 @@
+{
+  "name": "Доза - Калькулятор КТ",
+  "short_name": "Доза",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050816",
+  "theme_color": "#0b1020",
+  "icons": [
+    {
+      "src": "https://cosmocalamary.github.io/medical/calc/tomodose/calc.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cosmocalamary.github.io/medical/calc/tomodose/calc.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
