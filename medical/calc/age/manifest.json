@@ -1,0 +1,22 @@
+{
+  "name": "Калькулятор возраста",
+  "short_name": "Возраст",
+  "description": "Точный расчёт полного возраста до часов с визуализацией этапов жизни",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#02040a",
+  "theme_color": "#7c2d12",
+  "icons": [
+    {
+      "src": "https://cosmocalamary.github.io/medical/calc/age/calc.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cosmocalamary.github.io/medical/calc/age/calc.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
