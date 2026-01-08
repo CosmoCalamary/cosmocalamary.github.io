@@ -25,18 +25,17 @@
 
   <style>
     :root {
+      /* Palette: Orange / Amber */
       --bg: #02040a;
       --bg-soft: #7c2d12;
-      --accent: #f97316;
+      --accent: #f97316; /* Orange 400 */
       --accent-glow: rgba(249, 115, 22, 0.4);
       --accent-soft: rgba(249, 115, 22, 0.1);
       
-      --text-main: #fdf4f4;
-      --text-muted: #fcd34d;
+      --text-main: #fdf4f0;
+      --text-muted: #f8dac5;
       --border-subtle: rgba(249, 115, 22, 0.2);
       
-      --success: #4ade80;
-      --warning: #facc15;
       --error: #fb7185;
       --radius-xl: 18px;
       --radius-lg: 12px;
@@ -58,7 +57,7 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(circle at top right, #ea580c26 0, transparent 40%),
+        radial-gradient(circle at top right, #ea580c40 0, transparent 40%),
         radial-gradient(circle at bottom left, #0f172a 0, transparent 55%),
         var(--bg);
       color: var(--text-main);
@@ -87,7 +86,7 @@
       position: absolute;
       inset: -40%;
       background:
-        radial-gradient(circle at 20% 10%, rgba(202, 138, 51, 0.06), transparent 55%),
+        radial-gradient(circle at 20% 10%, rgba(202, 44, 12, 0.06), transparent 55%),
         radial-gradient(circle at 80% 90%, rgba(180, 83, 9, 0.05), transparent 55%);
       mix-blend-mode: screen;
       opacity: 0.7;
@@ -99,7 +98,7 @@
       z-index: 1;
       border-radius: 30px;
       background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
-      padding: 20px 20px 20px;
+      padding: 26px 22px 22px;
       border: 1px solid rgba(249, 115, 22, 0.15);
       backdrop-filter: blur(16px);
     }
@@ -173,10 +172,14 @@
       color: var(--text-muted);
     }
 
-    /* Unified date input styling - ONE icon only */
+    /* REMOVE SPINNERS */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number], input[type="date"] { -moz-appearance: textfield; }
+
     input[type="date"] {
       width: 100%;
-      padding: 12px 40px 12px 12px;
+      padding: 12px;
       border-radius: 10px;
       border: 1px solid rgba(249, 115, 22, 0.2);
       background: rgba(10, 20, 30, 0.6);
@@ -184,45 +187,25 @@
       font-size: 16px;
       outline: none;
       transition: all 0.2s ease;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23fcd34d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 18px;
+      appearance: none;
     }
 
-    input[type="date"]:focus {
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    ::placeholder {
+      color: rgba(248, 218, 197, 0.35);
+      font-size: 14px;
+    }
+
+    input:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 1px var(--accent-glow);
       background: rgba(10, 20, 30, 0.9);
-    }
-
-    /* MOBILE: Hide native picker, show numeric keyboard */
-    @media (max-width: 640px) {
-      input[type="date"] {
-        -webkit-appearance: none;
-        appearance: none;
-        background-image: none;
-        padding-right: 12px;
-      }
-      
-      input[type="date"]::-webkit-calendar-picker-indicator {
-        display: none;
-        -webkit-appearance: none;
-        appearance: none;
-      }
-    }
-
-    /* DESKTOP: Keep native picker + our icon */
-    @media (min-width: 641px) {
-      input[type="date"]::-webkit-calendar-picker-indicator {
-        filter: invert(0.8) hue-rotate(40deg);
-        cursor: pointer;
-        opacity: 0;
-        position: absolute;
-        right: 12px;
-        width: 20px;
-        height: 20px;
-      }
     }
 
     .btn-row {
@@ -243,8 +226,8 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      color: #fdf4f4;
+      background: linear-gradient(135deg, #f97316, #c2410c);
+      color: #fdf4f0;
       box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
     }
 
@@ -275,64 +258,12 @@
       line-height: 1.1;
       font-variant-numeric: tabular-nums;
       text-shadow: 0 0 20px rgba(249, 115, 22, 0.2);
-      margin-bottom: 4px;
     }
 
-    .result-breakdown {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin: 12px 0;
-    }
-
-    .breakdown-item {
-      text-align: center;
-      padding: 8px 4px;
-      background: rgba(249, 115, 22, 0.1);
-      border-radius: 8px;
-      border: 1px solid rgba(249, 115, 22, 0.2);
-    }
-
-    .breakdown-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      opacity: 0.8;
-      margin-bottom: 2px;
-    }
-
-    .breakdown-value {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    .life-stage {
-      margin-top: 12px;
-      padding: 12px;
-      background: rgba(249, 115, 22, 0.05);
-      border-radius: 12px;
-      border: 1px solid rgba(249, 115, 22, 0.15);
-    }
-
-    .stage-title {
+    .result-unit {
       font-size: 14px;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .stage-progress {
-      height: 6px;
-      background: rgba(249, 115, 22, 0.2);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .stage-bar {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), #fb923c);
-      border-radius: 3px;
-      transition: width 0.5s ease;
+      color: var(--text-muted);
+      margin-top: 4px;
     }
 
     .result-details {
@@ -340,14 +271,13 @@
       padding-top: 16px;
       border-top: 1px solid var(--border-subtle);
       display: grid;
-      gap: 6px;
+      gap: 8px;
     }
 
     .detail-row {
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
-      line-height: 1.3;
+      font-size: 13px;
     }
     
     .detail-label { color: var(--text-muted); }
@@ -376,25 +306,25 @@
       <header>
         <h1>Калькулятор возраста</h1>
         <div class="subtitle">
-          Точный расчёт полного возраста с точностью до часов. Возраст на любую дату.
+          Точный расчёт полного возраста на любую дату. Поддерживает високосные годы.
         </div>
       </header>
 
       <main>
         <!-- INPUTS -->
         <section class="card">
-          <h2>Дата рождения</h2>
+          <h2>Параметры</h2>
           <div class="card-body">
             <div class="field">
               <label>Дата рождения</label>
               <input type="date" id="birthDate">
             </div>
-            
+
             <div class="field">
               <label>Найти возраст на дату</label>
               <input type="date" id="targetDate">
             </div>
-            
+
             <div class="error-msg" id="error"></div>
 
             <div class="btn-row">
@@ -410,49 +340,21 @@
           <div class="card-body">
             <div class="result-primary">
               <div class="result-value" id="mainResult">—</div>
-              <div id="lifeStage" class="life-stage" style="display:none;">
-                <div class="stage-title" id="stageTitle">—</div>
-                <div class="stage-progress">
-                  <div class="stage-bar" id="stageBar" style="width:0%"></div>
-                </div>
-              </div>
+              <div class="result-unit" id="resultUnit"></div>
             </div>
 
-            <div class="result-breakdown" id="breakdown" style="display:none;">
-              <div class="breakdown-item">
-                <div class="breakdown-label">Лет</div>
-                <div class="breakdown-value" id="years">0</div>
-              </div>
-              <div class="breakdown-item">
-                <div class="breakdown-label">Месяцев</div>
-                <div class="breakdown-value" id="months">0</div>
-              </div>
-              <div class="breakdown-item">
-                <div class="breakdown-label">Дней</div>
-                <div class="breakdown-value" id="days">0</div>
-              </div>
-              <div class="breakdown-item">
-                <div class="breakdown-label">Часов</div>
-                <div class="breakdown-value" id="hours">0</div>
-              </div>
-            </div>
-
-            <div class="result-details" id="details" style="display:none;">
+            <div class="result-details">
               <div class="detail-row">
-                <span class="detail-label">% от средней жизни (М):</span>
-                <span class="detail-val" id="lifePercentMen">—</span>
+                <span class="detail-label">Полных лет:</span>
+                <span class="detail-val" id="fullYears">—</span>
               </div>
               <div class="detail-row">
-                <span class="detail-label">% от средней жизни (Ж):</span>
-                <span class="detail-val" id="lifePercentWomen">—</span>
+                <span class="detail-label">Месяцев:</span>
+                <span class="detail-val" id="totalMonths">—</span>
               </div>
               <div class="detail-row">
-                <span class="detail-label">Дней всего:</span>
+                <span class="detail-label">Дней:</span>
                 <span class="detail-val" id="totalDays">—</span>
-              </div>
-              <div class="detail-row">
-                <span class="detail-label">Недель:</span>
-                <span class="detail-val" id="totalWeeks">—</span>
               </div>
             </div>
           </div>
@@ -460,8 +362,9 @@
       </main>
       
       <div class="footer-note" id="footerNote">
-        Расчёт ведётся по григорианскому календарю с учётом високосных годов.
+        Точная математика с учётом високосных лет.
       </div>
+
     </div>
   </div>
 
@@ -474,77 +377,32 @@
     const errorBox = document.getElementById('error');
 
     const mainResult = document.getElementById('mainResult');
-    const breakdown = document.getElementById('breakdown');
-    const details = document.getElementById('details');
-    const lifeStage = document.getElementById('lifeStage');
-    
-    const yearsEl = document.getElementById('years');
-    const monthsEl = document.getElementById('months');
-    const daysEl = document.getElementById('days');
-    const hoursEl = document.getElementById('hours');
-    const lifePercentMenEl = document.getElementById('lifePercentMen');
-    const lifePercentWomenEl = document.getElementById('lifePercentWomen');
-    const totalDaysEl = document.getElementById('totalDays');
-    const totalWeeksEl = document.getElementById('totalWeeks');
-    const stageTitleEl = document.getElementById('stageTitle');
-    const stageBarEl = document.getElementById('stageBar');
+    const resultUnit = document.getElementById('resultUnit');
+    const fullYears = document.getElementById('fullYears');
+    const totalMonths = document.getElementById('totalMonths');
+    const totalDays = document.getElementById('totalDays');
     const footerNote = document.getElementById('footerNote');
 
-    // Set dates
-    const today = new Date();
-    const formatDate = (date) => {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    };
+    // Set default dates
+    const today = new Date(2026, 0, 8); // 08.01.2026
+    targetDateInput.value = today.toISOString().split('T')[0];
+    targetDateInput.min = '1900-01-01';
+    targetDateInput.max = '2030-12-31';
+    
+    birthDateInput.min = '1900-01-01';
+    birthDateInput.max = targetDateInput.value;
 
-    targetDateInput.value = formatDate(today);
-    birthDateInput.focus();
-
-    function formatNumber(num) {
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    function isLeapYear(year) {
+      return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
     }
 
-    function getLifeStage(age) {
-      if (age < 13) return { title: 'Детство', percent: age / 13 * 100, color: '#10b981' };
-      if (age < 20) return { title: 'Юность', percent: (age - 13) / 7 * 100, color: '#3b82f6' };
-      if (age < 35) return { title: 'Молодость', percent: (age - 20) / 15 * 100, color: '#f59e0b' };
-      if (age < 60) return { title: 'Зрелость', percent: (age - 35) / 25 * 100, color: '#8b5cf6' };
-      return { title: 'Зрелый возраст', percent: (age - 60) / 25 * 100, color: '#ef4444' };
+    function getDaysInMonth(year, month) {
+      const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      if (month === 1) return isLeapYear(year) ? 29 : 28;
+      return daysInMonth[month];
     }
 
-    function calculateAge(birthDate, targetDate) {
-      let years = targetDate.getFullYear() - birthDate.getFullYear();
-      let months = targetDate.getMonth() - birthDate.getMonth();
-      let days = targetDate.getDate() - birthDate.getDate();
-      let hours = targetDate.getHours();
-
-      if (months < 0 || (months === 0 && days < 0)) {
-        years--;
-        months += 12;
-      }
-      if (days < 0) {
-        const lastMonth = new Date(targetDate.getFullYear(), targetDate.getMonth(), 0);
-        days += lastMonth.getDate();
-        months--;
-      }
-
-      const totalDays = Math.floor((targetDate - birthDate) / (1000 * 60 * 60 * 24));
-      const totalWeeks = Math.floor(totalDays / 7);
-
-      return {
-        years,
-        months: Math.abs(months),
-        days: Math.abs(days),
-        hours: Math.abs(hours),
-        totalDays,
-        totalWeeks,
-        ageDecimal: years + (months / 12)
-      };
-    }
-
-    function calculate() {
+    function calculateAge() {
       errorBox.textContent = '';
       
       const birthDateStr = birthDateInput.value;
@@ -559,63 +417,89 @@
         errorBox.textContent = 'Выберите дату для расчёта';
         return;
       }
-
+      
       const birthDate = new Date(birthDateStr + 'T00:00:00');
       const targetDate = new Date(targetDateStr + 'T00:00:00');
       
-      if (birthDate.getFullYear() < 1900) {
-        errorBox.textContent = 'Укажите дату рождения после 1900 года';
+      if (birthDate > targetDate) {
+        errorBox.textContent = 'Дата рождения не может быть в будущем';
         return;
       }
-
-      const ageData = calculateAge(birthDate, targetDate);
       
-      mainResult.textContent = `${ageData.years}`;
+      // Calculate total days
+      const diffTime = targetDate - birthDate;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
       
-      yearsEl.textContent = formatNumber(ageData.years);
-      monthsEl.textContent = formatNumber(ageData.months);
-      daysEl.textContent = formatNumber(ageData.days);
-      hoursEl.textContent = formatNumber(ageData.hours);
+      // Calculate years, months, days
+      let years = targetDate.getFullYear() - birthDate.getFullYear();
+      let months = targetDate.getMonth() - birthDate.getMonth();
+      let days = targetDate.getDate() - birthDate.getDate();
       
-      const avgLifeMen = 68;
-      const avgLifeWomen = 78;
-      lifePercentMenEl.textContent = `${((ageData.ageDecimal/avgLifeMen)*100).toFixed(0)}%`;
-      lifePercentWomenEl.textContent = `${((ageData.ageDecimal/avgLifeWomen)*100).toFixed(0)}%`;
+      if (days < 0) {
+        months--;
+        const lastMonth = targetDate.getMonth() === 0 ? 11 : targetDate.getMonth() - 1;
+        const prevYear = targetDate.getMonth() === 0 ? targetDate.getFullYear() - 1 : targetDate.getFullYear();
+        days += getDaysInMonth(prevYear, lastMonth);
+      }
       
-      totalDaysEl.textContent = formatNumber(ageData.totalDays);
-      totalWeeksEl.textContent = formatNumber(ageData.totalWeeks);
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
       
-      const stage = getLifeStage(ageData.years);
-      stageTitleEl.textContent = `${stage.title} (${Math.floor(ageData.ageDecimal)} лет)`;
-      stageBarEl.style.width = `${Math.min(stage.percent, 100)}%`;
+      const totalMonthsCalc = years * 12 + months;
       
-      breakdown.style.display = 'grid';
-      details.style.display = 'grid';
-      lifeStage.style.display = 'block';
-      footerNote.textContent = `Возраст на ${targetDate.toLocaleDateString('ru-RU')}. Средняя продолжительность жизни в РФ: М-${avgLifeMen}/Ж-${avgLifeWomen} лет.`;
+      // Display results
+      mainResult.textContent = years;
+      resultUnit.textContent = 'лет';
+      
+      if (years === 0) {
+        resultUnit.textContent = 'месяцев';
+        mainResult.textContent = totalMonthsCalc;
+      }
+      
+      fullYears.textContent = years;
+      totalMonths.textContent = totalMonthsCalc;
+      totalDays.textContent = diffDays.toLocaleString();
+      
+      footerNote.textContent = `Расчёт на ${targetDateStr} (${isLeapYear(targetDate.getFullYear()) ? 'високосный' : 'обычный'} год)`;
     }
 
     function reset() {
       birthDateInput.value = '';
-      targetDateInput.value = formatDate(today);
+      
       mainResult.textContent = '—';
-      breakdown.style.display = 'none';
-      details.style.display = 'none';
-      lifeStage.style.display = 'none';
+      resultUnit.textContent = '';
+      fullYears.textContent = '—';
+      totalMonths.textContent = '—';
+      totalDays.textContent = '—';
+      
       errorBox.textContent = '';
-      footerNote.textContent = "Расчёт ведётся по григорианскому календарю с учётом високосных годов.";
+      footerNote.textContent = 'Точная математика с учётом високосных лет.';
+      
+      // Reset default target date
+      targetDateInput.value = new Date(2026, 0, 8).toISOString().split('T')[0];
       birthDateInput.focus();
     }
 
     calcBtn.addEventListener('click', calculate);
     resetBtn.addEventListener('click', reset);
     
-    [birthDateInput, targetDateInput].forEach(input => {
-      input.addEventListener('change', calculate);
-      input.addEventListener('keydown', (e) => {
+    // Auto-calc on Enter
+    [birthDateInput, targetDateInput].forEach(inp => {
+      inp.addEventListener('change', calculate);
+      inp.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') calculate();
       });
     });
+
+    // Update max date for birthDate when targetDate changes
+    targetDateInput.addEventListener('change', () => {
+      birthDateInput.max = targetDateInput.value;
+    });
+
+    // Focus first input
+    birthDateInput.focus();
   </script>
 </body>
 </html>
