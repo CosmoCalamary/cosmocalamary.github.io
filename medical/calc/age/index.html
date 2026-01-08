@@ -172,7 +172,7 @@
       color: var(--text-muted);
     }
 
-    input[type="text"] {
+    input[type="text"], input[type="date"] {
       width: 100%;
       padding: 12px 14px;
       border-radius: 10px;
@@ -186,6 +186,11 @@
       font-family: inherit;
     }
 
+    input[type="text"]::-webkit-calendar-picker-indicator,
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+
     ::placeholder {
       color: rgba(254, 215, 170, 0.35);
       font-size: 14px;
@@ -195,31 +200,6 @@
       border-color: var(--accent);
       box-shadow: 0 0 0 1px var(--accent-glow);
       background: rgba(10, 20, 30, 0.9);
-    }
-
-    .radio-group {
-      display: flex;
-      background: rgba(10, 20, 30, 0.6);
-      padding: 4px;
-      border-radius: 10px;
-      border: 1px solid rgba(249, 115, 22, 0.2);
-    }
-
-    .radio-option {
-      flex: 1;
-      text-align: center;
-      padding: 8px;
-      font-size: 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      color: var(--text-muted);
-      transition: all 0.2s;
-    }
-
-    .radio-option.active {
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 500;
     }
 
     .btn-row {
@@ -310,11 +290,15 @@
     .detail-label { color: var(--text-muted); }
     .detail-val { font-weight: 500; font-variant-numeric: tabular-nums; }
 
-    .life-percent {
-      background: rgba(249, 115, 22, 0.15);
-      border: 1px solid rgba(249, 115, 22, 0.3);
-      border-radius: 8px;
-      padding: 8px 12px;
+    .life-expectancy {
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.2);
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 12px;
+    }
+
+    .life-expectancy .detail-row {
       font-size: 12px;
     }
 
@@ -341,24 +325,15 @@
       <header>
         <h1>Калькулятор возраста</h1>
         <div class="subtitle">
-          Точный расчёт прожитых лет, дней и % от средней продолжительности жизни по РФ.
+          Точный расчёт прожитых лет, дней и знака зодиака по дате рождения.
         </div>
       </header>
 
       <main>
         <!-- INPUTS -->
         <section class="card">
-          <h2>Параметры</h2>
+          <h2>Дата рождения</h2>
           <div class="card-body">
-            <!-- Gender -->
-            <div class="field">
-              <label>Пол</label>
-              <div class="radio-group" id="genderGroup">
-                <div class="radio-option active" data-value="male">Мужской</div>
-                <div class="radio-option" data-value="female">Женский</div>
-              </div>
-            </div>
-
             <div class="field">
               <label>Дата рождения</label>
               <input type="text" id="birthDate" placeholder="дд.мм.гггг" inputmode="numeric" maxlength="10" pattern="[0-9]*">
@@ -401,17 +376,17 @@
                 <span class="detail-label">Недель:</span>
                 <span class="detail-val" id="totalWeeks">—</span>
               </div>
-              <div class="detail-row">
-                <span class="detail-label">Осталось жить:</span>
-                <span class="detail-val" id="yearsLeft">—</span>
-              </div>
             </div>
 
-            <!-- Life Percentage -->
-            <div id="lifePercentSection" style="display:none;">
+            <!-- Новая секция: % от продолжительности жизни РФ -->
+            <div class="life-expectancy" id="lifeExpectancy" style="display:none;">
               <div class="detail-row">
-                <span class="detail-label">Прожито (% от средней по РФ):</span>
-                <span class="detail-val life-percent" id="lifePercent">—</span>
+                <span class="detail-label">% от жизни (М) (73 года):</span>
+                <span class="detail-val" id="menPercent">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">% от жизни (Ж) (78 лет):</span>
+                <span class="detail-val" id="womenPercent">—</span>
               </div>
             </div>
           </div>
@@ -419,17 +394,13 @@
       </main>
       
       <div class="footer-note" id="footerNote">
-        Средняя продолжительность жизни РФ 2026: мужчины 70 лет, женщины 78 лет.
+        Точный расчёт с учётом високосных годов. Данные по РФ: Росстат 2026.
       </div>
 
     </div>
   </div>
 
   <script>
-    // Elements
-    const genderOpts = document.querySelectorAll('.radio-option');
-    let selectedGender = 'male';
-
     const birthInput = document.getElementById('birthDate');
     const targetInput = document.getElementById('targetDate');
     const calcBtn = document.getElementById('calcBtn');
@@ -442,29 +413,20 @@
     const fullYears = document.getElementById('fullYears');
     const totalDays = document.getElementById('totalDays');
     const totalWeeks = document.getElementById('totalWeeks');
-    const yearsLeft = document.getElementById('yearsLeft');
-    const lifePercentSection = document.getElementById('lifePercentSection');
-    const lifePercent = document.getElementById('lifePercent');
     const footerNote = document.getElementById('footerNote');
 
-    // Средняя продолжительность жизни РФ 2026
-    const LIFE_EXPECTANCY = {
-      male: 70,
-      female: 78
-    };
+    // Новые элементы
+    const lifeExpectancy = document.getElementById('lifeExpectancy');
+    const menPercent = document.getElementById('menPercent');
+    const womenPercent = document.getElementById('womenPercent');
+
+    // Средняя продолжительность жизни РФ 2026 (Росстат)
+    const LIFE_EXPECT_MEN = 73;    // лет
+    const LIFE_EXPECT_WOMEN = 78;  // лет
 
     // Текущая дата по умолчанию (08.01.2026)
     const today = new Date('2026-01-08');
     targetInput.value = formatDate(today);
-
-    // Gender Switcher
-    genderOpts.forEach(opt => {
-      opt.addEventListener('click', () => {
-        genderOpts.forEach(o => o.classList.remove('active'));
-        opt.classList.add('active');
-        selectedGender = opt.dataset.value;
-      });
-    });
 
     // Форматирование даты дд.мм.гггг
     function formatDate(date) {
@@ -543,12 +505,10 @@
       }
       fullYearsCount--;
 
-      // Осталось жить
-      const lifeExpectancy = LIFE_EXPECTANCY[selectedGender];
-      const yearsLeftCount = Math.max(0, lifeExpectancy - fullYearsCount);
-      
-      // Процент прожитой жизни
-      const lifePercentValue = ((fullYearsCount / lifeExpectancy) * 100).toFixed(1);
+      // % от продолжительности жизни РФ
+      const ageInYears = fullYearsCount;
+      const menPercentVal = ((ageInYears / LIFE_EXPECT_MEN) * 100).toFixed(1);
+      const womenPercentVal = ((ageInYears / LIFE_EXPECT_WOMEN) * 100).toFixed(1);
 
       // Отображение
       mainResult.textContent = fullYearsCount;
@@ -557,36 +517,31 @@
       fullYears.textContent = fullYearsCount;
       totalDays.textContent = diffDays.toLocaleString();
       totalWeeks.textContent = diffWeeks.toLocaleString();
-      yearsLeft.textContent = `${yearsLeftCount} лет`;
       
       // Знак зодиака
       zodiacBadge.textContent = getZodiac(birthDate);
       zodiacBadge.style.display = 'inline-block';
       
-      // Процент жизни
-      lifePercent.textContent = `${lifePercentValue}% (${selectedGender === 'male' ? 'М' : 'Ж'})`;
-      lifePercentSection.style.display = 'block';
+      // Продолжительность жизни РФ
+      menPercent.textContent = `${menPercentVal}%`;
+      womenPercent.textContent = `${womenPercentVal}%`;
+      lifeExpectancy.style.display = 'block';
       
-      footerNote.textContent = `Расчёт на ${formatDate(targetDate)}. Средняя по РФ ${LIFE_EXPECTANCY[selectedGender]} лет для ${selectedGender === 'male' ? 'мужчин' : 'женщин'}.`;
+      footerNote.textContent = `Расчёт на ${formatDate(targetDate)}. РФ: мужчины ${LIFE_EXPECT_MEN}л, женщины ${LIFE_EXPECT_WOMEN}л`;
     }
 
     function reset() {
       birthInput.value = '';
       targetInput.value = formatDate(today);
-      genderOpts[0].classList.add('active');
-      genderOpts[1].classList.remove('active');
-      selectedGender = 'male';
-      
       mainResult.textContent = '—';
       resultUnit.textContent = 'лет';
       zodiacBadge.style.display = 'none';
-      lifePercentSection.style.display = 'none';
       fullYears.textContent = '—';
       totalDays.textContent = '—';
       totalWeeks.textContent = '—';
-      yearsLeft.textContent = '—';
+      lifeExpectancy.style.display = 'none';
       errorBox.textContent = '';
-      footerNote.textContent = 'Средняя продолжительность жизни РФ 2026: мужчины 70 лет, женщины 78 лет.';
+      footerNote.textContent = 'Точный расчёт с учётом високосных годов. Данные по РФ: Росстат 2026.';
       birthInput.focus();
     }
 
