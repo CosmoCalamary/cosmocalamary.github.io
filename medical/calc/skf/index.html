@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>СКФ Калькулятор</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <!-- PWA Settings for Android -->
+  <meta name="theme-color" content="#042f2e">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- PWA Settings for iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="СКФ">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/240/kidney.png">
+  <link rel="icon" href="https://img.icons8.com/fluency/240/kidney.png">
+
+  <style>
+    :root {
+      /* Palette: Turquoise / Teal */
+      --bg: #02040a;
+      --bg-soft: #042f2e;
+      --accent: #2dd4bf; /* Teal 400 */
+      --accent-glow: rgba(45, 212, 191, 0.4);
+      --accent-soft: rgba(45, 212, 191, 0.1);
+      
+      --text-main: #f0fdfa;
+      --text-muted: #99f6e4;
+      --border-subtle: rgba(45, 212, 191, 0.2);
+      
+      --error: #fb7185;
+      --radius-xl: 18px;
+      --radius-lg: 12px;
+      --shadow-soft: 0 30px 80px rgba(2, 6, 23, 0.8);
+      
+      --card-bg: radial-gradient(circle at top left, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 1));
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body, button, input, select, textarea {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, #115e59 0, transparent 45%),
+        radial-gradient(circle at bottom left, #0f172a 0, transparent 55%),
+        var(--bg);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 720px;
+      background: radial-gradient(circle at top, rgba(45, 212, 191, 0.1), transparent 60%),
+                  linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
+      border-radius: 32px;
+      padding: 1px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(45, 212, 191, 0.08), transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(20, 184, 166, 0.07), transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative;
+      z-index: 1;
+      border-radius: 30px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
+      padding: 26px 22px 22px;
+      border: 1px solid rgba(45, 212, 191, 0.15);
+      backdrop-filter: blur(16px);
+    }
+
+    @media (min-width: 640px) {
+      .panel { padding: 26px 26px 24px; }
+    }
+
+    header {
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+      letter-spacing: 0.02em;
+      margin: 0 0 4px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      opacity: 0.8;
+      max-width: 480px;
+      line-height: 1.4;
+    }
+
+    main {
+      display: grid;
+      gap: 16px;
+    }
+
+    @media (min-width: 720px) {
+      main {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .card-body {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* REMOVE SPINNERS */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(45, 212, 191, 0.2);
+      background: rgba(10, 20, 30, 0.6);
+      color: var(--text-main);
+      font-size: 16px;
+      outline: none;
+      transition: all 0.2s ease;
+      appearance: none;
+    }
+
+    /* Styling Placeholders */
+    ::placeholder {
+      color: rgba(153, 246, 228, 0.35); /* Subtle turquoise */
+      font-size: 14px;
+    }
+
+    input[type="number"]:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-glow);
+      background: rgba(10, 20, 30, 0.9);
+    }
+
+    .input-group {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .unit-select {
+      width: auto;
+      min-width: 100px;
+      background: rgba(45, 212, 191, 0.05);
+      border-color: rgba(45, 212, 191, 0.1);
+      color: var(--accent);
+      font-size: 13px;
+      padding: 10px 8px;
+      cursor: pointer;
+    }
+
+    .radio-group {
+      display: flex;
+      background: rgba(10, 20, 30, 0.6);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(45, 212, 191, 0.2);
+    }
+
+    .radio-option {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+
+    .radio-option.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* Custom Checkbox Row */
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 0;
+      cursor: pointer;
+    }
+    
+    .checkbox-row input[type="checkbox"] {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(45, 212, 191, 0.4);
+      border-radius: 6px;
+      background: rgba(10, 20, 30, 0.6);
+      display: grid;
+      place-content: center;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-row input[type="checkbox"]::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      transform: scale(0);
+      background-color: var(--accent);
+      border-radius: 2px;
+      transition: 120ms transform ease-in-out;
+    }
+
+    .checkbox-row input[type="checkbox"]:checked::before {
+      transform: scale(1);
+    }
+
+    .checkbox-row label {
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text-main);
+      margin: 0;
+      user-select: none;
+    }
+
+    .btn-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2dd4bf, #0d9488);
+      color: #022c22;
+      box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(45, 212, 191, 0.2);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Results */
+    .result-primary {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .result-value {
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 20px rgba(45, 212, 191, 0.2);
+    }
+
+    .result-unit {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .stage-badge {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+    
+    .stage-g1 { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+    .stage-g2 { background: rgba(132, 204, 22, 0.2); color: #bef264; }
+    .stage-g3a { background: rgba(250, 204, 21, 0.2); color: #fde047; }
+    .stage-g3b { background: rgba(249, 115, 22, 0.2); color: #fdba74; }
+    .stage-g4 { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+    .stage-g5 { background: rgba(225, 29, 72, 0.2); color: #fda4af; }
+
+    .result-details {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      display: grid;
+      gap: 8px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+    
+    .detail-label { color: var(--text-muted); }
+    .detail-val { font-weight: 500; font-variant-numeric: tabular-nums; }
+    
+    .label-formula { color: var(--accent); opacity: 0.8; font-size: 12px; }
+
+    .error-msg {
+      color: var(--error);
+      font-size: 12px;
+      text-align: center;
+      min-height: 18px;
+      margin-top: 4px;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 11px;
+      color: var(--text-muted);
+      opacity: 0.6;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="panel">
+      <header>
+        <h1>Калькулятор СКФ</h1>
+        <div class="subtitle">
+          Расчёт скорости клубочковой фильтрации (CKD-EPI) для взрослых и формула Шварца для детей.
+        </div>
+      </header>
+
+      <main>
+        <!-- INPUTS -->
+        <section class="card">
+          <h2>Параметры пациента</h2>
+          <div class="card-body">
+            
+            <!-- Gender -->
+            <div class="field">
+              <label>Пол</label>
+              <div class="radio-group" id="genderGroup">
+                <div class="radio-option active" data-value="male">Мужской</div>
+                <div class="radio-option" data-value="female">Женский</div>
+              </div>
+            </div>
+
+            <!-- Age & Weight Row -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="field">
+                <label>Возраст</label>
+                <div class="input-group">
+                  <input type="number" id="age" placeholder="лет" inputmode="numeric">
+                </div>
+              </div>
+              <div class="field">
+                <label>Вес (кг)</label>
+                <div class="input-group">
+                  <input type="number" id="weight" placeholder="опц." inputmode="decimal">
+                </div>
+              </div>
+            </div>
+
+             <!-- Height Row -->
+             <div class="field">
+                <label>Рост (см)</label>
+                <div class="input-group">
+                  <input type="number" id="height" placeholder="для детей / BSA" inputmode="numeric">
+                </div>
+             </div>
+
+            <!-- Creatinine -->
+            <div class="field">
+              <label>Креатинин сыворотки</label>
+              <div class="input-group">
+                <input type="number" id="creatinine" placeholder="напр. 85" inputmode="decimal">
+                <select id="unit" class="unit-select">
+                  <option value="mkmol">мкмоль/л</option>
+                  <option value="mgdl">мг/дл</option>
+                </select>
+              </div>
+            </div>
+            
+            <!-- Race Checkbox -->
+            <div class="checkbox-row" onclick="document.getElementById('isBlack').click()">
+               <input type="checkbox" id="isBlack" onclick="event.stopPropagation()">
+               <label for="isBlack">Негроидная раса</label>
+            </div>
+
+            <div class="error-msg" id="error"></div>
+
+            <div class="btn-row">
+              <button class="btn-primary" id="calcBtn">Рассчитать</button>
+              <button class="btn-ghost" id="resetBtn">Сброс</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- RESULTS -->
+        <section class="card">
+          <h2>Результат</h2>
+          <div class="card-body">
+            
+            <div class="result-primary">
+              <div class="result-value" id="mainResult">—</div>
+              <div class="result-unit">мл/мин/1.73м²</div>
+              <div id="formulaLabel" class="label-formula">CKD-EPI (2009)</div>
+              <div id="stageBadge" class="stage-badge" style="display:none;">G1 Норма</div>
+            </div>
+
+            <div class="result-details">
+              <!-- MDRD Block (Only for Adults) -->
+              <div class="detail-row" id="rowMDRD">
+                <span class="detail-label">MDRD:</span>
+                <span class="detail-val" id="resMDRD">—</span>
+              </div>
+              
+              <!-- BSA Section -->
+              <div class="detail-row" id="rowBSA" style="display:none;">
+                <span class="detail-label">BSA (Du Bois):</span>
+                <span class="detail-val" id="resBSA">—</span>
+              </div>
+
+              <!-- Cockcroft-Gault Section -->
+              <div class="detail-row" id="rowCG" style="display:none;">
+                <span class="detail-label">Кокрофт-Голт:</span>
+                <span class="detail-val" id="resCG">—</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </main>
+      
+      <div class="footer-note" id="footerNote">
+        CKD-EPI валидирована для возраста 18+.
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Elements
+    const genderOpts = document.querySelectorAll('.radio-option');
+    let selectedGender = 'male';
+
+    const ageInput = document.getElementById('age');
+    const weightInput = document.getElementById('weight');
+    const heightInput = document.getElementById('height');
+    const creatInput = document.getElementById('creatinine');
+    const unitSelect = document.getElementById('unit');
+    const blackCheck = document.getElementById('isBlack');
+    
+    const calcBtn = document.getElementById('calcBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const errorBox = document.getElementById('error');
+
+    const mainResult = document.getElementById('mainResult');
+    const stageBadge = document.getElementById('stageBadge');
+    const formulaLabel = document.getElementById('formulaLabel');
+    const resMDRD = document.getElementById('resMDRD');
+    const rowMDRD = document.getElementById('rowMDRD');
+    const resCG = document.getElementById('resCG');
+    const rowCG = document.getElementById('rowCG');
+    const resBSA = document.getElementById('resBSA');
+    const rowBSA = document.getElementById('rowBSA');
+    const footerNote = document.getElementById('footerNote');
+
+    // Gender Switcher
+    genderOpts.forEach(opt => {
+      opt.addEventListener('click', () => {
+        genderOpts.forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        selectedGender = opt.dataset.value;
+      });
+    });
+
+    // Format Helpers
+    function formatVal(num) {
+      if (!isFinite(num)) return '—';
+      return num.toFixed(0);
+    }
+    
+    function formatFloat(num) {
+        if (!isFinite(num)) return '—';
+        return num.toFixed(2);
+    }
+
+    function getStage(gfr) {
+      if (gfr >= 90) return { t: 'G1 Норма', c: 'stage-g1' };
+      if (gfr >= 60) return { t: 'G2 Незн. снижение', c: 'stage-g2' };
+      if (gfr >= 45) return { t: 'G3a Умер. снижение', c: 'stage-g3a' };
+      if (gfr >= 30) return { t: 'G3b Сущ. снижение', c: 'stage-g3b' };
+      if (gfr >= 15) return { t: 'G4 Тяж. снижение', c: 'stage-g4' };
+      return { t: 'G5 Терминальная', c: 'stage-g5' };
+    }
+
+    function calculate() {
+      // Clear errors
+      errorBox.textContent = '';
+      
+      // Parse Inputs
+      const age = parseFloat(ageInput.value);
+      const creatRaw = parseFloat(creatInput.value);
+      const weight = parseFloat(weightInput.value); 
+      const height = parseFloat(heightInput.value); 
+      const isFemale = selectedGender === 'female';
+      const isBlack = blackCheck.checked;
+      const unit = unitSelect.value;
+
+      if (!age || !creatRaw || age < 0 || creatRaw <= 0) {
+        errorBox.textContent = 'Укажите корректный возраст и креатинин';
+        return;
+      }
+      
+      // Convert Creatinine to mg/dL for calculations
+      // 1 mg/dL = 88.4 µmol/L
+      let scr = (unit === 'mkmol') ? (creatRaw / 88.4) : creatRaw;
+      
+      // --- LOGIC: CHILD (<18) vs ADULT (>=18) ---
+      
+      if (age < 18) {
+        // --- PEDIATRIC (Schwartz Bedside) ---
+        if (!height || height <= 0) {
+            errorBox.textContent = 'Для детей (до 18 лет) обязательно нужен рост';
+            mainResult.textContent = '—';
+            return;
+        }
+        
+        // Formula: GFR = 0.413 * Height(cm) / Scr(mg/dL)
+        let schwartz = (0.413 * height) / scr;
+        
+        mainResult.textContent = formatVal(schwartz);
+        formulaLabel.textContent = "Формула Шварца (Bedside)";
+        footerNote.textContent = "Для детей используется модифицированная формула Шварца.";
+        
+        // Hide Adult Specifics
+        rowMDRD.style.display = 'none';
+        rowCG.style.display = 'none';
+        
+        // Show Stage
+        const stage = getStage(schwartz);
+        stageBadge.className = 'stage-badge ' + stage.c;
+        stageBadge.textContent = stage.t;
+        stageBadge.style.display = 'inline-block';
+        
+      } else {
+        // --- ADULT (CKD-EPI) ---
+        
+        let k = isFemale ? 0.7 : 0.9;
+        let a = isFemale ? -0.329 : -0.411;
+        let f_gender = isFemale ? 1.018 : 1;
+        let f_race = isBlack ? 1.159 : 1;
+
+        let ckdEpi = 141 * 
+                     Math.pow(Math.min(scr / k, 1), a) * 
+                     Math.pow(Math.max(scr / k, 1), -1.209) * 
+                     Math.pow(0.993, age) * 
+                     f_gender * 
+                     f_race;
+
+        // Display Main Result
+        mainResult.textContent = formatVal(ckdEpi);
+        formulaLabel.textContent = "CKD-EPI (2009)";
+        footerNote.textContent = "CKD-EPI валидирована для возраста 18+.";
+        
+        // Update Stage Badge
+        const stage = getStage(ckdEpi);
+        stageBadge.className = 'stage-badge ' + stage.c;
+        stageBadge.textContent = stage.t;
+        stageBadge.style.display = 'inline-block';
+
+        // --- MDRD (4-variable) ---
+        let mdrd = 175 * 
+                   Math.pow(scr, -1.154) * 
+                   Math.pow(age, -0.203) * 
+                   (isFemale ? 0.742 : 1) * 
+                   (isBlack ? 1.212 : 1);
+        
+        resMDRD.textContent = formatVal(mdrd) + ' мл/мин';
+        rowMDRD.style.display = 'flex';
+
+        // --- Cockcroft-Gault (Only if weight present) ---
+        if (weight > 0) {
+           let cg = ((140 - age) * weight) / (72 * scr);
+           if (isFemale) cg *= 0.85;
+           
+           resCG.textContent = formatVal(cg) + ' мл/мин';
+           rowCG.style.display = 'flex';
+        } else {
+           rowCG.style.display = 'none';
+        }
+      }
+      
+      // --- BSA (Du Bois) - Common for both ---
+      // BSA = 0.007184 * W^0.425 * H^0.725
+      if (weight > 0 && height > 0) {
+          let bsa = 0.007184 * Math.pow(weight, 0.425) * Math.pow(height, 0.725);
+          resBSA.textContent = formatFloat(bsa) + ' м²';
+          rowBSA.style.display = 'flex';
+      } else {
+          rowBSA.style.display = 'none';
+      }
+    }
+
+    function reset() {
+      ageInput.value = '';
+      creatInput.value = '';
+      weightInput.value = '';
+      heightInput.value = '';
+      
+      mainResult.textContent = '—';
+      formulaLabel.textContent = '';
+      resMDRD.textContent = '—';
+      
+      stageBadge.style.display = 'none';
+      rowCG.style.display = 'none';
+      rowMDRD.style.display = 'none'; // hide initially
+      rowBSA.style.display = 'none';
+      
+      errorBox.textContent = '';
+      footerNote.textContent = "CKD-EPI валидирована для возраста 18+.";
+      creatInput.focus();
+    }
+
+    calcBtn.addEventListener('click', calculate);
+    resetBtn.addEventListener('click', reset);
+    
+    // Auto-calc on Enter
+    [ageInput, creatInput, weightInput, heightInput].forEach(inp => {
+      inp.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter') calculate();
+      });
+    });
+
+  </script>
+</body>
+</html>
