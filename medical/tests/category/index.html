@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Медицинский тренажер</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Экран выбора серии -->
+        <div id="startScreen" class="screen active">
+            <h1>Медицинский тренажер</h1>
+            <p class="subtitle">Выберите количество вопросов для тренировки</p>
+            
+            <div class="series-buttons">
+                <button class="series-btn" data-count="10">10 вопросов</button>
+                <button class="series-btn" data-count="20">20 вопросов</button>
+                <button class="series-btn" data-count="30">30 вопросов</button>
+                <button class="series-btn" data-count="50">50 вопросов</button>
+            </div>
+
+            <div class="stats-summary">
+                <h3>Общая статистика</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalQuestions">0</span>
+                        <span class="stat-label">Всего вопросов</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalCorrect">0</span>
+                        <span class="stat-label">Правильных</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalAccuracy">0%</span>
+                        <span class="stat-label">Точность</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="secondary-btn" id="showStatsBtn">Подробная статистика</button>
+            <button class="secondary-btn" id="resetProgressBtn">Сбросить прогресс</button>
+        </div>
+
+        <!-- Экран теста -->
+        <div id="testScreen" class="screen">
+            <div class="header">
+                <div class="progress-info">
+                    <span id="currentQuestion">1</span> / <span id="totalInSeries">10</span>
+                </div>
+                <div class="session-stats">
+                    <span class="correct-count" id="sessionCorrect">0</span> / 
+                    <span class="incorrect-count" id="sessionIncorrect">0</span>
+                </div>
+                <button class="icon-btn" id="exitTestBtn" title="Выйти">✕</button>
+            </div>
+
+            <div class="question-container">
+                <h2 id="questionText"></h2>
+                <div id="answersContainer" class="answers-container"></div>
+            </div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div class="controls">
+                <button id="submitBtn" class="primary-btn">Проверить</button>
+                <button id="nextBtn" class="primary-btn" style="display: none;">Следующий вопрос</button>
+            </div>
+        </div>
+
+        <!-- Экран результатов -->
+        <div id="resultsScreen" class="screen">
+            <h1>Результаты серии</h1>
+            <div class="results-container">
+                <div class="result-circle">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="bg-circle" cx="60" cy="60" r="54"></circle>
+                        <circle class="progress-circle" id="resultCircle" cx="60" cy="60" r="54"></circle>
+                    </svg>
+                    <div class="result-text">
+                        <div class="result-percentage" id="resultPercentage">0%</div>
+                        <div class="result-fraction" id="resultFraction">0/0</div>
+                    </div>
+                </div>
+                
+                <div class="result-stats">
+                    <div class="result-stat correct">
+                        <span class="result-stat-value" id="resultCorrect">0</span>
+                        <span class="result-stat-label">Правильно</span>
+                    </div>
+                    <div class="result-stat incorrect">
+                        <span class="result-stat-value" id="resultIncorrect">0</span>
+                        <span class="result-stat-label">Неправильно</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-buttons">
+                <button class="primary-btn" id="repeatBtn">Повторить серию</button>
+                <button class="secondary-btn" id="backToMenuBtn">Главное меню</button>
+            </div>
+        </div>
+
+        <!-- Экран статистики -->
+        <div id="statsScreen" class="screen">
+            <div class="stats-header">
+                <h1>Подробная статистика</h1>
+                <button class="icon-btn" id="closeStatsBtn">✕</button>
+            </div>
+
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-card-value" id="statsTotal">0</div>
+                    <div class="stat-card-label">Всего ответов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="statsCorrect">0</div>
+                    <div class="stat-card-label">Правильных</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="statsAccuracy">0%</div>
+                    <div class="stat-card-label">Точность</div>
+                </div>
+            </div>
+
+            <h3>Сложные вопросы</h3>
+            <div id="difficultQuestions" class="difficult-questions"></div>
+        </div>
+
+        <!-- Кнопка смены темы -->
+        <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+            <span class="theme-icon">🌙</span>
+        </button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
