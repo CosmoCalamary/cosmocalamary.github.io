@@ -3,22 +3,150 @@ let questions = [];
 let currentSession = {
     questions: [],
     currentIndex: 0,
-    seriesSize: 0,
     correct: 0,
-    incorrect: 0
+    incorrect: 0,
+    isActive: false
 };
+
+// Встроенные вопросы (данные загружаются из отдельного файла questionsData.js)
+// Если файл questionsData.js существует, он перезапишет эту переменную
+let questionsText = `Q: Какой нормальный диапазон артериального давления для взрослого человека?
+A: 90/60 - 120/80 мм рт.ст.
+B: 140/90 - 160/100 мм рт.ст.
+C: 120/80 - 140/90 мм рт.ст.
+D: 80/50 - 100/70 мм рт.ст.
+CORRECT: A
+
+Q: Признаки острого инфаркта миокарда (может быть несколько)?
+A: Интенсивная боль за грудиной
+B: Высокая температура тела
+C: Одышка и затрудненное дыхание
+D: Холодный пот
+E: Сильная головная боль
+CORRECT: A,C,D
+
+Q: Что означает аббревиатура ЭКГ?
+A: Электрокардиограмма
+B: Эхокардиография
+C: Электроэнцефалограмма
+D: Эндоскопическая кардиография
+CORRECT: A
+
+Q: Какая нормальная частота сердечных сокращений в покое у взрослого?
+A: 40-50 ударов в минуту
+B: 60-100 ударов в минуту
+C: 100-120 ударов в минуту
+D: 120-140 ударов в минуту
+CORRECT: B
+
+Q: Симптомы гипогликемии (низкий уровень сахара в крови)?
+A: Потливость
+B: Дрожь в руках
+C: Сухость во рту
+D: Головокружение
+E: Учащенное сердцебиение
+CORRECT: A,B,D,E
+
+Q: Что такое анафилактический шок?
+A: Острая аллергическая реакция угрожающая жизни
+B: Потеря сознания от удара
+C: Сердечный приступ
+D: Инсульт
+CORRECT: A
+
+Q: Нормальная температура тела человека (в градусах Цельсия)?
+A: 35.5 - 36.0
+B: 36.0 - 36.5
+C: 36.5 - 37.2
+D: 37.5 - 38.0
+CORRECT: C
+
+Q: Первая помощь при переломе конечности включает?
+A: Иммобилизацию поврежденной конечности
+B: Вправление перелома на месте
+C: Наложение холодного компресса
+D: Обезболивание при возможности
+E: Транспортировку в медицинское учреждение
+CORRECT: A,C,D,E
+
+Q: Какой орган вырабатывает инсулин?
+A: Печень
+B: Поджелудочная железа
+C: Щитовидная железа
+D: Надпочечники
+CORRECT: B
+
+Q: Признаки инсульта по тесту FAST?
+A: Face (асимметрия лица)
+B: Arm (слабость в руке)
+C: Speech (нарушение речи)
+D: Time (время звонить в скорую)
+CORRECT: A,B,C,D
+
+Q: Что такое тахикардия?
+A: Учащенное сердцебиение (более 100 уд/мин)
+B: Замедленное сердцебиение (менее 60 уд/мин)
+C: Нерегулярное сердцебиение
+D: Остановка сердца
+CORRECT: A
+
+Q: Нормальная частота дыхания взрослого человека в покое?
+A: 8-10 вдохов в минуту
+B: 12-20 вдохов в минуту
+C: 25-30 вдохов в минуту
+D: 30-40 вдохов в минуту
+CORRECT: B
+
+Q: Что такое цианоз?
+A: Посинение кожи и слизистых из-за недостатка кислорода
+B: Покраснение кожи
+C: Пожелтение кожи
+D: Побледнение кожи
+CORRECT: A
+
+Q: Признаки сотрясения мозга?
+A: Кратковременная потеря сознания
+B: Головная боль
+C: Тошнота и рвота
+D: Повышение температуры
+E: Головокружение
+CORRECT: A,B,C,E
+
+Q: Что такое артериальная гипертензия?
+A: Повышенное артериальное давление
+B: Пониженное артериальное давление
+C: Нормальное артериальное давление
+D: Нестабильное артериальное давление
+CORRECT: A`;
 
 // Загрузка и парсинг вопросов
 async function loadQuestions() {
     try {
-        const response = await fetch('questions.txt');
-        const text = await response.text();
-        questions = parseQuestions(text);
+        // Пытаемся загрузить из внешнего файла (опционально)
+        try {
+            const response = await fetch('questions.txt');
+            if (response.ok) {
+                const text = await response.text();
+                if (text.trim()) {
+                    questionsText = text;
+                    console.log('Вопросы загружены из questions.txt');
+                }
+            }
+        } catch (fetchError) {
+            console.log('Используются встроенные вопросы');
+        }
+        
+        questions = parseQuestions(questionsText);
         console.log(`Загружено вопросов: ${questions.length}`);
+        
+        if (questions.length === 0) {
+            throw new Error('Не удалось распарсить вопросы');
+        }
+        
         updateGlobalStats();
     } catch (error) {
         console.error('Ошибка загрузки вопросов:', error);
-        alert('Ошибка загрузки вопросов. Проверьте файл questions.txt');
+        alert('Ошибка загрузки вопросов. Проверьте консоль браузера для деталей.');
     }
 }
 
@@ -168,19 +296,38 @@ function showScreen(screenId) {
     document.getElementById(screenId).classList.add('active');
 }
 
-// Начало серии
-function startSeries(size) {
+// Начало серии (бесконечный режим)
+function startSeries() {
     currentSession = {
-        questions: generateSeries(size),
+        questions: [],
         currentIndex: 0,
-        seriesSize: size,
         correct: 0,
-        incorrect: 0
+        incorrect: 0,
+        isActive: true
     };
     
-    document.getElementById('totalInSeries').textContent = size;
+    // Генерируем первый вопрос
+    addNextQuestion();
+    
     showScreen('testScreen');
     showQuestion();
+}
+
+// Добавление следующего вопроса в серию
+function addNextQuestion() {
+    const availableQuestions = questions.filter(q => 
+        !currentSession.questions.some(sq => sq.id === q.id)
+    );
+    
+    // Если все вопросы использованы, начинаем заново
+    if (availableQuestions.length === 0) {
+        currentSession.questions = [];
+        addNextQuestion();
+        return;
+    }
+    
+    const nextQuestion = selectWeightedQuestion(availableQuestions);
+    currentSession.questions.push(nextQuestion);
 }
 
 // Показ вопроса
@@ -246,36 +393,70 @@ function checkAnswer() {
     const selected = Array.from(document.querySelectorAll('.answer-option.selected'))
         .map(opt => opt.dataset.letter);
     
-    const correct = question.correctAnswers.sort().join(',');
-    const answer = selected.sort().join(',');
-    const isCorrect = correct === answer;
+    const correctSet = new Set(question.correctAnswers);
+    const selectedSet = new Set(selected);
     
-    // Обновление статистики
-    if (isCorrect) {
+    // Определяем тип ответа
+    let isFullyCorrect = correctSet.size === selectedSet.size && 
+                         [...correctSet].every(c => selectedSet.has(c));
+    
+    let hasCorrect = selected.some(s => correctSet.has(s));
+    let hasIncorrect = selected.some(s => !correctSet.has(s));
+    let missedCorrect = [...correctSet].some(c => !selectedSet.has(c));
+    
+    let answerType;
+    if (isFullyCorrect) {
+        answerType = 'correct';
         currentSession.correct++;
+    } else if (hasCorrect && (hasIncorrect || missedCorrect)) {
+        answerType = 'partial';
+        currentSession.incorrect++;
     } else {
+        answerType = 'incorrect';
         currentSession.incorrect++;
     }
-    updateQuestionStats(question.id, isCorrect);
+    
+    // Обновление статистики
+    updateQuestionStats(question.id, isFullyCorrect);
     
     // Визуальная обратная связь
     document.querySelectorAll('.answer-option').forEach(opt => {
         opt.classList.add('disabled');
         const letter = opt.dataset.letter;
         
-        if (question.correctAnswers.includes(letter)) {
+        if (correctSet.has(letter) && selectedSet.has(letter)) {
+            // Выбран и правильный
             opt.classList.add('correct');
-        } else if (selected.includes(letter)) {
+        } else if (correctSet.has(letter) && !selectedSet.has(letter)) {
+            // Правильный, но не выбран
+            opt.classList.add('correct');
+            opt.style.opacity = '0.7';
+        } else if (!correctSet.has(letter) && selectedSet.has(letter)) {
+            // Выбран, но неправильный
             opt.classList.add('incorrect');
+        } else if (!correctSet.has(letter) && selectedSet.has(letter)) {
+            // Неправильный и выбран
+            opt.classList.add('partial');
         }
     });
     
     // Показ обратной связи
     const feedback = document.getElementById('feedback');
-    feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'incorrect');
+    feedback.className = 'feedback show ' + answerType;
     
-    if (isCorrect) {
+    if (answerType === 'correct') {
         feedback.innerHTML = '<div class="feedback-title">✓ Правильно!</div>';
+    } else if (answerType === 'partial') {
+        const correctText = question.correctAnswers
+            .map(letter => {
+                const ans = question.answers.find(a => a.letter === letter);
+                return `${letter}. ${ans.text}`;
+            })
+            .join('<br>');
+        feedback.innerHTML = `
+            <div class="feedback-title">⚠ Частично правильно</div>
+            <div>Полный правильный ответ:<br>${correctText}</div>
+        `;
     } else {
         const correctText = question.correctAnswers
             .map(letter => {
@@ -302,35 +483,23 @@ function checkAnswer() {
 function nextQuestion() {
     currentSession.currentIndex++;
     
-    if (currentSession.currentIndex < currentSession.questions.length) {
-        showQuestion();
-    } else {
-        showResults();
+    // Генерируем новый вопрос, если достигли конца текущего списка
+    if (currentSession.currentIndex >= currentSession.questions.length) {
+        addNextQuestion();
     }
+    
+    showQuestion();
 }
 
-// Показ результатов
-function showResults() {
-    const correct = currentSession.correct;
-    const total = currentSession.seriesSize;
-    const percentage = Math.round((correct / total) * 100);
+// Завершение теста
+function endTest() {
+    if (!currentSession.isActive) return;
     
-    document.getElementById('resultPercentage').textContent = percentage + '%';
-    document.getElementById('resultFraction').textContent = `${correct}/${total}`;
-    document.getElementById('resultCorrect').textContent = correct;
-    document.getElementById('resultIncorrect').textContent = currentSession.incorrect;
-    
-    // Анимация круга
-    const circumference = 339.292;
-    const offset = circumference - (percentage / 100) * circumference;
-    const circle = document.getElementById('resultCircle');
-    
-    setTimeout(() => {
-        circle.style.strokeDashoffset = offset;
-    }, 100);
-    
-    updateGlobalStats();
-    showScreen('resultsScreen');
+    if (confirm('Закончить тест? Результаты будут сохранены в статистике.')) {
+        currentSession.isActive = false;
+        updateGlobalStats();
+        showScreen('startScreen');
+    }
 }
 
 // Показ детальной статистики
@@ -409,30 +578,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadQuestions();
     initTheme();
     
-    // Обработчики кнопок выбора серии
-    document.querySelectorAll('.series-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const count = parseInt(btn.dataset.count);
-            startSeries(count);
-        });
+    // Обработчик кнопки старта теста
+    document.getElementById('startTestBtn').addEventListener('click', () => {
+        startSeries();
     });
     
     // Обработчики кнопок управления
     document.getElementById('submitBtn').addEventListener('click', checkAnswer);
     document.getElementById('nextBtn').addEventListener('click', nextQuestion);
-    document.getElementById('exitTestBtn').addEventListener('click', () => {
-        if (confirm('Выйти из теста? Прогресс будет потерян.')) {
-            showScreen('startScreen');
-        }
-    });
-    
-    // Результаты
-    document.getElementById('repeatBtn').addEventListener('click', () => {
-        startSeries(currentSession.seriesSize);
-    });
-    document.getElementById('backToMenuBtn').addEventListener('click', () => {
-        showScreen('startScreen');
-    });
+    document.getElementById('exitTestBtn').addEventListener('click', endTest);
     
     // Статистика
     document.getElementById('showStatsBtn').addEventListener('click', showDetailedStats);
