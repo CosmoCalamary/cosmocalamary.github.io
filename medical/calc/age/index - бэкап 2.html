@@ -191,39 +191,6 @@
       display: none;
     }
 
-    .date-picker-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .date-picker-wrap input[type="text"] {
-      cursor: pointer;
-      padding-right: 40px;
-    }
-
-    .date-picker-wrap input[type="date"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-      z-index: 2;
-      padding: 0;
-      border: none;
-      background: transparent;
-    }
-
-    .date-picker-icon {
-      position: absolute;
-      right: 12px;
-      font-size: 16px;
-      pointer-events: none;
-      z-index: 3;
-      opacity: 0.7;
-    }
-
     ::placeholder {
       color: rgba(254, 215, 170, 0.35);
       font-size: 14px;
@@ -374,11 +341,7 @@
             
             <div class="field">
               <label>Найти возраст на дату</label>
-              <div class="date-picker-wrap" id="targetDateWrap">
-                <input type="text" id="targetDate" placeholder="дд.мм.гггг" readonly>
-                <input type="date" id="targetDateNative" tabindex="-1">
-                <span class="date-picker-icon">📅</span>
-              </div>
+              <input type="text" id="targetDate" placeholder="дд.мм.гггг" inputmode="numeric" maxlength="10" pattern="[0-9]*">
             </div>
 
             <div class="error-msg" id="error"></div>
@@ -439,8 +402,7 @@
 
   <script>
     const birthInput = document.getElementById('birthDate');
-    const targetInput = document.getElementById('targetDate');       // текстовое отображение
-    const targetNative = document.getElementById('targetDateNative'); // нативный date-пикер
+    const targetInput = document.getElementById('targetDate');
     const calcBtn = document.getElementById('calcBtn');
     const resetBtn = document.getElementById('resetBtn');
     const errorBox = document.getElementById('error');
@@ -462,28 +424,9 @@
     const LIFE_EXPECT_MEN = 73;    // лет
     const LIFE_EXPECT_WOMEN = 78;  // лет
 
-    // ✅ Актуальная дата на момент открытия страницы
+    // Текущая дата по умолчанию (08.01.2026)
     const today = new Date();
-
-    // Синхронизация нативного пикера → текстовое поле
-    function setTargetDate(date) {
-      targetInput.value = formatDate(date);
-      // Формат для input[type=date]: yyyy-mm-dd
-      const y = date.getFullYear();
-      const m = String(date.getMonth() + 1).padStart(2, '0');
-      const d = String(date.getDate()).padStart(2, '0');
-      targetNative.value = `${y}-${m}-${d}`;
-    }
-
-    // При выборе даты в нативном пикере — обновить текстовое поле
-    targetNative.addEventListener('change', () => {
-      if (targetNative.value) {
-        const [y, m, d] = targetNative.value.split('-').map(Number);
-        setTargetDate(new Date(y, m - 1, d));
-      }
-    });
-
-    setTargetDate(today);
+    targetInput.value = formatDate(today);
 
     // Форматирование даты дд.мм.гггг
     function formatDate(date) {
@@ -589,7 +532,7 @@
 
     function reset() {
       birthInput.value = '';
-      setTargetDate(today);
+      targetInput.value = formatDate(today);
       mainResult.textContent = '—';
       resultUnit.textContent = 'лет';
       zodiacBadge.style.display = 'none';
@@ -611,6 +554,7 @@
     }
 
     birthInput.addEventListener('input', () => formatInput(birthInput));
+    targetInput.addEventListener('input', () => formatInput(targetInput));
 
     calcBtn.addEventListener('click', calculate);
     resetBtn.addEventListener('click', reset);
