@@ -622,25 +622,90 @@
       birthInput.focus();
     }
 
-    // Форматирование ввода (дд.мм.гггг)
+    // Форматирование ввода (дд.мм.гггг) с сохранением позиции курсора
     function formatInput(el) {
-      let val = el.value.replace(/[^0-9]/g, '');
-      if (val.length >= 2) val = val.slice(0,2) + '.' + val.slice(2);
-      if (val.length >= 5) val = val.slice(0,5) + '.' + val.slice(5,9);
-      el.value = val;
+      const pos = el.selectionStart;
+      const oldVal = el.value;
+      let digits = oldVal.replace(/[^0-9]/g, '');
+      if (digits.length >= 2) digits = digits.slice(0,2) + '.' + digits.slice(2);
+      if (digits.length >= 5) digits = digits.slice(0,5) + '.' + digits.slice(5,9);
+      el.value = digits;
+
+      // Пересчитываем позицию курсора: учитываем добавленные/убранные точки
+      let newPos = pos;
+      const oldDots = (oldVal.slice(0, pos).match(/\./g) || []).length;
+      const newDots = (digits.slice(0, pos).match(/\./g) || []).length;
+      newPos += (newDots - oldDots);
+      // Если курсор оказался на точке — сдвигаем вперёд
+      if (digits[newPos] === '.') newPos++;
+      newPos = Math.max(0, Math.min(newPos, digits.length));
+      el.setSelectionRange(newPos, newPos);
+    }
+
+    // Для поля targetDate на ПК — умный keydown чтобы backspace/delete не прыгал
+    function handleDateKeydown(el, e) {
+      if (e.key === 'Enter') { calculate(); return; }
+
+      const pos = el.selectionStart;
+      const val = el.value;
+
+      if (e.key === 'Backspace') {
+        e.preventDefault();
+        if (pos === 0) return;
+        // Если перед курсором точка — перепрыгиваем через неё
+        const delPos = (val[pos - 1] === '.') ? pos - 2 : pos - 1;
+        if (delPos < 0) return;
+        const newVal = val.slice(0, delPos) + '_' + val.slice(delPos + 1);
+        // Убираем трейлинг-подчёркивания и переформатируем
+        let digits = newVal.replace(/[^0-9]/g, '');
+        digits = digits.replace(/^0+$/, '') ; // не трогаем незаполненные
+        let formatted = digits;
+        if (formatted.length >= 2) formatted = formatted.slice(0,2) + '.' + formatted.slice(2);
+        if (formatted.length >= 5) formatted = formatted.slice(0,5) + '.' + formatted.slice(5,9);
+        el.value = formatted;
+        const np = Math.min(delPos, formatted.length);
+        el.setSelectionRange(np, np);
+        return;
+      }
+
+      if (e.key === 'Delete') {
+        e.preventDefault();
+        if (pos >= val.length) return;
+        const delPos = (val[pos] === '.') ? pos + 1 : pos;
+        if (delPos >= val.length) return;
+        let digits = (val.slice(0, delPos) + val.slice(delPos + 1)).replace(/[^0-9]/g, '');
+        let formatted = digits;
+        if (formatted.length >= 2) formatted = formatted.slice(0,2) + '.' + formatted.slice(2);
+        if (formatted.length >= 5) formatted = formatted.slice(0,5) + '.' + formatted.slice(5,9);
+        el.value = formatted;
+        let np = delPos;
+        if (formatted[np] === '.') np++;
+        np = Math.min(np, formatted.length);
+        el.setSelectionRange(np, np);
+        return;
+      }
     }
 
     birthInput.addEventListener('input', () => formatInput(birthInput));
 
+    if (isDesktop) {
+      targetInput.addEventListener('input', () => formatInput(targetInput));
+      targetInput.addEventListener('keydown', (e) => handleDateKeydown(targetInput, e));
+    }
+
     calcBtn.addEventListener('click', calculate);
     resetBtn.addEventListener('click', reset);
-    
-    // Enter для расчёта
-    [birthInput, targetInput].forEach(inp => {
-      inp.addEventListener('keydown', (e) => {
+
+    // Enter для birthInput
+    birthInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') calculate();
+    });
+    // Enter для targetInput на мобильном (на ПК уже в handleDateKeydown)
+    if (!isDesktop) {
+      targetInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') calculate();
       });
-    });
+    }
 
     birthInput.focus();
   </script>
