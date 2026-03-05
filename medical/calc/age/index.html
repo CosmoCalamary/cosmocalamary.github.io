@@ -198,10 +198,10 @@
     }
 
     .date-picker-wrap input[type="text"] {
-      cursor: pointer;
       padding-right: 40px;
     }
 
+    /* Мобильный режим: нативный пикер поверх текстового поля */
     .date-picker-wrap input[type="date"] {
       position: absolute;
       inset: 0;
@@ -213,6 +213,16 @@
       padding: 0;
       border: none;
       background: transparent;
+    }
+
+    /* На ПК скрываем нативный пикер — ввод через текстовое поле */
+    @media (hover: hover) and (pointer: fine) {
+      .date-picker-wrap input[type="date"] {
+        display: none;
+      }
+      .date-picker-wrap input[type="text"] {
+        cursor: text;
+      }
     }
 
     .date-picker-icon {
@@ -465,10 +475,20 @@
     // ✅ Актуальная дата на момент открытия страницы
     const today = new Date();
 
+    // Определяем тип устройства: ПК (мышь) или мобильный (touch/stylus)
+    const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (isDesktop) {
+      // На ПК — обычный редактируемый текстовый ввод с форматированием
+      targetInput.removeAttribute('readonly');
+      targetInput.setAttribute('inputmode', 'numeric');
+      targetInput.setAttribute('maxlength', '10');
+      targetInput.addEventListener('input', () => formatInput(targetInput));
+    }
+
     // Синхронизация нативного пикера → текстовое поле
     function setTargetDate(date) {
       targetInput.value = formatDate(date);
-      // Формат для input[type=date]: yyyy-mm-dd
       const y = date.getFullYear();
       const m = String(date.getMonth() + 1).padStart(2, '0');
       const d = String(date.getDate()).padStart(2, '0');
